@@ -2,10 +2,9 @@
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
-class Room extends Model
+class Year extends Model
 {
     protected $guarded = [];
     public function hostellers() { return $this->hasMany(Hosteller::class); }
-    public function category() { return $this->belongsTo(Category::class, 'room_category'); }
 }
 

@@ -89,43 +89,37 @@
                     </a>
                 </div>
                 
-                <div class="px-9 py-4 uppercase text-[10px] font-black text-slate-400 tracking-[0.25em]">Management</div>
+                <div class="px-9 py-4 uppercase text-[10px] font-black text-slate-400 tracking-[0.25em]">Academic Setup</div>
                 
-                <a href="{{ route('buildings.index') }}" class="nav-link-premium {{ request()->routeIs('buildings.*') ? 'active' : '' }}">
-                    <i class="fas fa-building mr-4 opacity-70"></i> Buildings
+                <a href="#" class="nav-link-premium">
+                    <i class="fas fa-layer-group mr-4 opacity-70"></i> Batches
                 </a>
-                <a href="{{ route('rooms.index') }}" class="nav-link-premium {{ request()->routeIs('rooms.*') ? 'active' : '' }}">
+                <a href="#" class="nav-link-premium">
+                    <i class="fas fa-calendar-alt mr-4 opacity-70"></i> Academic Years
+                </a>
+                <a href="#" class="nav-link-premium">
+                    <i class="fas fa-tags mr-4 opacity-70"></i> Categories
+                </a>
+
+                <div class="px-9 py-4 uppercase text-[10px] font-black text-slate-400 tracking-[0.25em]">Hostel Core</div>
+                
+                <a href="#" class="nav-link-premium">
                     <i class="fas fa-door-open mr-4 opacity-70"></i> Rooms
                 </a>
-                <a href="{{ route('furniture.index') }}" class="nav-link-premium {{ request()->routeIs('furniture.*') ? 'active' : '' }}">
-                    <i class="fas fa-couch mr-4 opacity-70"></i> Furniture
-                </a>
-                <a href="{{ route('students.index') }}" class="nav-link-premium {{ request()->routeIs('students.*') ? 'active' : '' }}">
-                    <i class="fas fa-user-graduate mr-4 opacity-70"></i> Students
-                </a>
-                <a href="{{ route('attendance.index') }}" class="nav-link-premium {{ request()->routeIs('attendance.*') ? 'active' : '' }}">
-                    <i class="fas fa-calendar-check mr-4 opacity-70"></i> Attendance
+                <a href="#" class="nav-link-premium">
+                    <i class="fas fa-user-graduate mr-4 opacity-70"></i> Hostellers
                 </a>
                 
                 <div class="px-9 py-4 uppercase text-[10px] font-black text-slate-400 tracking-[0.25em]">Operations</div>
                 
-                <a href="{{ route('payments.index') }}" class="nav-link-premium {{ request()->routeIs('payments.*') ? 'active' : '' }}">
-                    <i class="fas fa-credit-card mr-4 opacity-70"></i> Payments
+                <a href="#" class="nav-link-premium">
+                    <i class="fas fa-envelope-open-text mr-4 opacity-70"></i> Leaves
                 </a>
-                <a href="{{ route('expenses.index') }}" class="nav-link-premium {{ request()->routeIs('expenses.*') ? 'active' : '' }}">
-                    <i class="fas fa-file-invoice-dollar mr-4 opacity-70"></i> Expenses
+                <a href="#" class="nav-link-premium">
+                    <i class="fas fa-calendar-check mr-4 opacity-70"></i> Attendance
                 </a>
-                <a href="{{ route('fee-structures.index') }}" class="nav-link-premium {{ request()->routeIs('fee-structures.*') ? 'active' : '' }}">
-                    <i class="fas fa-tags mr-4 opacity-70"></i> Prices Palette
-                </a>
-                <a href="{{ route('maintenance.index') }}" class="nav-link-premium {{ request()->routeIs('maintenance.*') ? 'active' : '' }}">
-                    <i class="fas fa-tools mr-4 opacity-70"></i> Maintenance
-                </a>
-                <a href="{{ route('complaints.index') }}" class="nav-link-premium {{ request()->routeIs('complaints.*') ? 'active' : '' }}">
-                    <i class="fas fa-ticket-alt mr-4 opacity-70"></i> Complaints
-                </a>
-                <a href="{{ route('reports.index') }}" class="nav-link-premium {{ request()->routeIs('reports.*') ? 'active' : '' }}">
-                    <i class="fas fa-chart-pie mr-4 opacity-70"></i> Reports
+                <a href="#" class="nav-link-premium">
+                    <i class="fas fa-comment-dots mr-4 opacity-70"></i> Remarks
                 </a>
                 
                 <div class="px-9 py-4 uppercase text-[10px] font-black text-slate-400 tracking-[0.25em]">System</div>
@@ -175,11 +169,11 @@
                     
                     <div class="flex items-center group cursor-pointer">
                         <div class="text-right mr-4 hidden md:block">
-                            <div class="text-xs font-black text-white leading-none mb-1 capitalize">{{ Auth::user()->name }}</div>
+                            <div class="text-xs font-black text-white leading-none mb-1 capitalize">{{ Auth::user()->username }}</div>
                             <div class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Administrator</div>
                         </div>
                         <div class="h-11 w-11 rounded-2xl bg-indigo-600 flex items-center justify-center text-white font-black shadow-lg shadow-indigo-600/20 group-hover:scale-110 transition-transform border-4 border-slate-900">
-                            {{ substr(Auth::user()->name, 0, 1) }}
+                            {{ substr(Auth::user()->username, 0, 1) }}
                         </div>
                     </div>
                 </div>

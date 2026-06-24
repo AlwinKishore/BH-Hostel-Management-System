@@ -2,10 +2,9 @@
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
-class Attendance extends Model
+class HostellerDetail extends Model
 {
     protected $guarded = [];
     public function hosteller() { return $this->belongsTo(Hosteller::class); }
-    public function submittedBy() { return $this->belongsTo(User::class, 'submitted_by'); }
 }
 
