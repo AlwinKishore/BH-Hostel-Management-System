@@ -91,19 +91,19 @@
                 
                 <div class="px-9 py-4 uppercase text-[10px] font-black text-slate-400 tracking-[0.25em]">Academic Setup</div>
                 
-                <a href="#" class="nav-link-premium">
+                <a href="{{ route('batches.index') }}" class="nav-link-premium {{ request()->routeIs('batches.*') ? 'active' : '' }}">
                     <i class="fas fa-layer-group mr-4 opacity-70"></i> Batches
                 </a>
-                <a href="#" class="nav-link-premium">
+                <a href="{{ route('years.index') }}" class="nav-link-premium {{ request()->routeIs('years.*') ? 'active' : '' }}">
                     <i class="fas fa-calendar-alt mr-4 opacity-70"></i> Academic Years
                 </a>
-                <a href="#" class="nav-link-premium">
+                <a href="{{ route('categories.index') }}" class="nav-link-premium {{ request()->routeIs('categories.*') ? 'active' : '' }}">
                     <i class="fas fa-tags mr-4 opacity-70"></i> Categories
                 </a>
 
                 <div class="px-9 py-4 uppercase text-[10px] font-black text-slate-400 tracking-[0.25em]">Hostel Core</div>
                 
-                <a href="#" class="nav-link-premium">
+                <a href="{{ route('rooms.index') }}" class="nav-link-premium {{ request()->routeIs('rooms.*') ? 'active' : '' }}">
                     <i class="fas fa-door-open mr-4 opacity-70"></i> Rooms
                 </a>
                 <a href="#" class="nav-link-premium">
