@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Year extends Model
 {
-    protected $guarded = [];
+    protected $fillable = ['year_name', 'is_active', 'created_by', 'updated_by'];
     public function hostellers() { return $this->hasMany(Hosteller::class); }
 }
 
