@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Hapi Hostel') }} - Admin Panel</title>
+    <title>{{ config('app.name', 'BH Hostel') }} - Admin Panel</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -77,7 +77,7 @@
                         <i class="fas fa-h text-xl text-white"></i>
                     </div>
                     <span class="text-xl font-black tracking-tighter uppercase italic">
-                        Hapi <span class="text-indigo-500">Hostel</span>
+                        BH <span class="text-indigo-500">Hostel</span>
                     </span>
                 </a>
             </div>

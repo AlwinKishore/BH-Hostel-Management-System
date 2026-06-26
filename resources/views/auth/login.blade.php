@@ -17,7 +17,7 @@
                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500 group-focus-within:text-indigo-400 transition-colors">
                     <i class="fas fa-envelope"></i>
                 </div>
-                <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus class="form-input-premium pl-11" placeholder="admin@hapi.com">
+                <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus class="form-input-premium pl-11" placeholder="admin@bh.com">
             </div>
             <x-input-error :messages="$errors->get('email')" class="mt-2 text-xs font-bold text-rose-500" />
         </div>

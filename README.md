@@ -1,4 +1,4 @@
-# Hapi Hostel Management System
+# BH Hostel Management System
 
 A comprehensive, modern Laravel web application for managing hostel operations including batches, students, rooms, attendance, and leaves.
 

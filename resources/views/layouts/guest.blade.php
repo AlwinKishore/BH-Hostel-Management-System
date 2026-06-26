@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Hapi Hostel') }} - Portal</title>
+        <title>{{ config('app.name', 'BH Hostel') }} - Portal</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -56,7 +56,7 @@
                     <i class="fas fa-h text-4xl text-white"></i>
                 </div>
                 <h1 class="text-4xl font-black tracking-tight text-white uppercase italic">
-                    Hapi <span class="text-indigo-500">Hostel</span>
+                    BH <span class="text-indigo-500">Hostel</span>
                 </h1>
                 <p class="text-slate-400 text-xs font-bold uppercase tracking-[0.2em] mt-2">Management System</p>
             </div>
@@ -72,7 +72,7 @@
                     <a href="#" class="hover:text-white transition-colors">Help Center</a>
                 </div>
                 <div class="text-slate-600 text-[10px] font-bold uppercase tracking-widest">
-                    &copy; {{ date('Y') }} Hapi Town.
+                    &copy; {{ date('Y') }} BH.
                 </div>
             </div>
         </div>

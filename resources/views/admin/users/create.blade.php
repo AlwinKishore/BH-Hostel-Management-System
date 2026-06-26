@@ -30,7 +30,7 @@
 
                 <div>
                     <label for="email" class="form-label-premium">Electronic Mail Address</label>
-                    <input type="email" name="email" id="email" class="form-input-premium" placeholder="operator@hapihostel.com" value="{{ old('email') }}" required>
+                    <input type="email" name="email" id="email" class="form-input-premium" placeholder="operator@bh.com" value="{{ old('email') }}" required>
                     @error('email') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                 </div>
 
