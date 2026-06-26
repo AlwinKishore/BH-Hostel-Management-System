@@ -3,72 +3,63 @@
 namespace App\Http\Controllers;
 
 use App\Models\Room;
-use App\Models\Building;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class RoomController extends Controller
 {
     public function index()
     {
-        $rooms = Room::with('building')->latest()->paginate(8);
+        $rooms = Room::with('category')->latest()->paginate(10);
         return view('admin.rooms.index', compact('rooms'));
     }
 
     public function create()
     {
-        $buildings = Building::where('status', 'active')->get();
-        return view('admin.rooms.create', compact('buildings'));
+        $categories = Category::where('is_active', true)->get();
+        return view('admin.rooms.create', compact('categories'));
     }
 
     public function store(Request $request)
     {
-        $building = Building::findOrFail($request->building_id);
-
         $validated = $request->validate([
-            'building_id' => 'required|exists:buildings,id',
-            'room_number' => 'required|string|max:50',
-            'floor' => 'required|integer|min:0|max:'.$building->total_floors,
-            'capacity' => 'required|integer|min:1|max:'.$building->capacity,
-            'type' => 'required|in:single,double,triple,dormitory',
-            'price' => 'required|numeric|min:0',
-            'status' => 'required|in:vacant,occupied,maintenance',
-        ], [
-            'floor.max' => 'The selected building only has ' . $building->total_floors . ' floors.',
-            'capacity.max' => 'The room capacity cannot exceed the total building capacity of ' . $building->capacity . '.',
+            'room_no' => 'required|string|max:20|unique:rooms,room_no',
+            'room_category' => 'nullable|exists:categories,id',
+            'floor' => 'nullable|string|max:20',
+            'accommodation' => 'required|integer|min:1|max:20',
+            'is_full' => 'boolean',
+            'is_available' => 'boolean'
         ]);
+
+        $validated['is_full'] = $request->has('is_full');
+        $validated['is_available'] = $request->has('is_available');
+        $validated['created_by'] = auth()->id();
 
         Room::create($validated);
 
         return redirect()->route('rooms.index')->with('success', 'Room created successfully.');
     }
 
-    public function show(Room $room)
-    {
-        return view('admin.rooms.show', compact('room'));
-    }
-
     public function edit(Room $room)
     {
-        $buildings = Building::where('status', 'active')->get();
-        return view('admin.rooms.edit', compact('room', 'buildings'));
+        $categories = Category::where('is_active', true)->get();
+        return view('admin.rooms.edit', compact('room', 'categories'));
     }
 
     public function update(Request $request, Room $room)
     {
-        $building = Building::findOrFail($request->building_id);
-
         $validated = $request->validate([
-            'building_id' => 'required|exists:buildings,id',
-            'room_number' => 'required|string|max:50',
-            'floor' => 'required|integer|min:0|max:'.$building->total_floors,
-            'capacity' => 'required|integer|min:1|max:'.$building->capacity,
-            'type' => 'required|in:single,double,triple,dormitory',
-            'price' => 'required|numeric|min:0',
-            'status' => 'required|in:vacant,occupied,maintenance',
-        ], [
-            'floor.max' => 'The selected building only has ' . $building->total_floors . ' floors.',
-            'capacity.max' => 'The room capacity cannot exceed the total building capacity of ' . $building->capacity . '.',
+            'room_no' => 'required|string|max:20|unique:rooms,room_no,' . $room->id,
+            'room_category' => 'nullable|exists:categories,id',
+            'floor' => 'nullable|string|max:20',
+            'accommodation' => 'required|integer|min:1|max:20',
+            'is_full' => 'boolean',
+            'is_available' => 'boolean'
         ]);
+
+        $validated['is_full'] = $request->has('is_full');
+        $validated['is_available'] = $request->has('is_available');
+        $validated['updated_by'] = auth()->id();
 
         $room->update($validated);
 

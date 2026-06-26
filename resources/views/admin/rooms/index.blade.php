@@ -1,15 +1,15 @@
 @extends('layouts.admin')
 
-@section('header', 'Rooms Management')
+@section('header', 'Rooms')
 
 @section('content')
 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10">
     <div>
-        <h3 class="text-3xl font-black text-slate-800 tracking-tight">Rooms</h3>
-        <p class="text-sm text-slate-600 font-medium">Manage individual units and occupancy status</p>
+        <h3 class="text-3xl font-black text-slate-800 tracking-tight">Hostel Rooms</h3>
+        <p class="text-sm text-slate-600 font-medium">Manage accommodation capacity and room assignments</p>
     </div>
     <a href="{{ route('rooms.create') }}" class="btn-premium">
-        <i class="fas fa-plus-circle mr-2 opacity-70"></i> Add New Room
+        <i class="fas fa-bed mr-2 opacity-70"></i> Add New Room
     </a>
 </div>
 
@@ -18,54 +18,58 @@
         <table class="modern-table">
             <thead>
                 <tr>
-                    <th>Room #</th>
-                    <th>Building & Floor</th>
-                    <th>Type</th>
+                    <th>Room Details</th>
+                    <th>Category</th>
                     <th>Capacity</th>
-                    <th>Status</th>
-                    <th class="text-right">Actions</th>
+                    <th>Availability</th>
+                    <th class="text-right">Operations</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse($rooms as $room)
                 <tr class="group">
                     <td>
-                        <div class="inline-flex items-center justify-center w-10 h-10 bg-indigo-50 text-indigo-700 font-black rounded-xl border border-indigo-100 mb-1">
-                            {{ $room->room_number }}
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-xl bg-orange-500 flex items-center justify-center text-white font-black mr-4 shadow-lg shadow-orange-500/20">
+                                {{ substr($room->room_no, 0, 2) }}
+                            </div>
+                            <div>
+                                <div class="font-bold text-slate-800 tracking-tight">Room {{ $room->room_no }}</div>
+                                <div class="text-[10px] uppercase font-black tracking-widest text-slate-400">Floor: {{ $room->floor ?? 'N/A' }}</div>
+                            </div>
                         </div>
                     </td>
                     <td>
-                        <div class="font-bold text-slate-800">{{ $room->building->name }}</div>
-                        <div class="text-[10px] text-slate-600 font-black uppercase tracking-wider">Floor {{ $room->floor }}</div>
+                        <div class="text-sm font-medium text-slate-600">{{ $room->category ? $room->category->category_name : 'Standard' }}</div>
                     </td>
                     <td>
-                        <span class="text-xs font-bold text-slate-700 px-3 py-1 bg-slate-100 rounded-lg italic">
-                            {{ ucfirst($room->type) }}
-                        </span>
+                        <div class="text-sm font-black text-slate-700">{{ $room->accommodation }} Person(s)</div>
                     </td>
                     <td>
-                        <div class="flex items-center text-slate-700 font-bold text-xs">
-                            <i class="fas fa-users mr-2 opacity-50"></i>
-                            {{ $room->capacity }} Persons
-                        </div>
-                    </td>
-                    <td>
-                        <span class="px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-full 
-                            {{ $room->status == 'vacant' ? 'bg-emerald-100 text-emerald-700' : 
-                               ($room->status == 'occupied' ? 'bg-sky-100 text-sky-700' : 'bg-rose-100 text-rose-700') }}">
-                            {{ $room->status }}
-                        </span>
+                        @if(!$room->is_available)
+                            <span class="px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-full bg-rose-100 text-rose-700 border border-rose-200">
+                                Maintenance
+                            </span>
+                        @elseif($room->is_full)
+                            <span class="px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-full bg-amber-100 text-amber-700 border border-amber-200">
+                                Full Capacity
+                            </span>
+                        @else
+                            <span class="px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200">
+                                Available
+                            </span>
+                        @endif
                     </td>
                     <td class="text-right">
                         <div class="flex justify-end space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <a href="{{ route('rooms.edit', $room) }}" class="p-2 text-slate-500 hover:text-indigo-600 transition-colors">
-                                <i class="fas fa-pen-nib"></i>
+                            <a href="{{ route('rooms.edit', $room) }}" class="p-2 text-slate-400 hover:text-indigo-600 transition-colors">
+                                <i class="fas fa-edit"></i>
                             </a>
                             <form action="{{ route('rooms.destroy', $room) }}" method="POST" class="inline-block">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="p-2 text-slate-500 hover:text-rose-600 transition-colors" onclick="return confirm('Remove this room permanently?')">
-                                    <i class="fas fa-trash-alt"></i>
+                                <button type="submit" class="p-2 text-slate-400 hover:text-rose-600 transition-colors" onclick="return confirm('Are you sure you want to delete this room?')">
+                                    <i class="fas fa-trash"></i>
                                 </button>
                             </form>
                         </div>
@@ -73,13 +77,8 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="6" class="text-center py-20">
-                        <div class="flex flex-col items-center">
-                            <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mb-4">
-                                <i class="fas fa-door-closed text-2xl text-slate-400"></i>
-                            </div>
-                            <span class="font-bold text-slate-500">No rooms configured yet.</span>
-                        </div>
+                    <td colspan="5" class="text-center py-20 italic font-bold text-slate-400">
+                        No rooms found.
                     </td>
                 </tr>
                 @endforelse

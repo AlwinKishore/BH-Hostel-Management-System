@@ -3,19 +3,19 @@
 @section('header', 'Edit Room')
 
 @section('content')
-<div class="max-w-9xl mx-auto">
-    <div class="flex items-center space-x-3 text-slate-500 mb-10 font-bold text-[10px] uppercase tracking-[0.2em]">
-        <a href="{{ route('dashboard') }}" class="hover:text-indigo-600 transition-colors">Dashboard</a>
+<div class="max-w-4xl mx-auto">
+    <div class="flex items-center space-x-2 text-slate-500 mb-6 font-bold text-[10px] uppercase tracking-widest">
+        <a href="{{ route('dashboard') }}" class="hover:text-indigo-600 transition-colors">Portal</a>
         <span>/</span>
         <a href="{{ route('rooms.index') }}" class="hover:text-indigo-600 transition-colors">Rooms</a>
         <span>/</span>
-        <span class="text-slate-800">Edit Asset</span>
+        <span class="text-slate-800">Edit Room</span>
     </div>
 
-    <div class="glass-card p-10 border-none shadow-2xl shadow-slate-200/60 transition-transform duration-500 hover:scale-[1.01]">
+    <div class="glass-card p-10 border-none shadow-2xl shadow-slate-200/60">
         <div class="mb-10">
-            <h3 class="text-2xl font-black text-slate-800 tracking-tight">Modify Room Profile</h3>
-            <p class="text-sm text-slate-600 font-medium">Update operational parameters and occupancy configurations</p>
+            <h3 class="text-2xl font-black text-slate-800 tracking-tight">Modify Room Details</h3>
+            <p class="text-sm text-slate-600 font-medium">Update the hostel room properties and capacity</p>
         </div>
 
         <form action="{{ route('rooms.update', $room) }}" method="POST" class="space-y-8">
@@ -24,112 +24,60 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                    <label for="building_id" class="form-label-premium">Target Building</label>
-                    <div class="relative group">
-                        <select name="building_id" id="building_id" class="form-input-premium appearance-none" required>
-                            @foreach($buildings as $building)
-                                <option value="{{ $building->id }}" data-floors="{{ $building->total_floors }}" data-capacity="{{ $building->capacity }}" {{ (old('building_id', $room->building_id) == $building->id) ? 'selected' : '' }}>
-                                    {{ $building->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                        <div class="absolute inset-y-0 right-0 pr-5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-indigo-500 transition-colors">
-                            <i class="fas fa-chevron-down text-xs"></i>
-                        </div>
-                    </div>
-                    @error('building_id') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
+                    <label for="room_no" class="form-label-premium">Room Number</label>
+                    <input type="text" name="room_no" id="room_no" class="form-input-premium" placeholder="e.g. A-101" value="{{ old('room_no', $room->room_no) }}" required>
+                    @error('room_no') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
-                    <label for="room_number" class="form-label-premium">Room Identifier / Number</label>
-                    <input type="text" name="room_number" id="room_number" class="form-input-premium" value="{{ old('room_number', $room->room_number) }}" required>
-                    @error('room_number') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
+                    <label for="room_category" class="form-label-premium">Room Category</label>
+                    <select name="room_category" id="room_category" class="form-input-premium">
+                        <option value="">-- Select Category (Optional) --</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ old('room_category', $room->room_category) == $category->id ? 'selected' : '' }}>
+                                {{ $category->category_name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('room_category') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                 </div>
+            </div>
 
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                    <label for="floor" class="form-label-premium">Floor Level <span id="floor-hint" class="text-[9px] lowercase font-normal italic opacity-60 ml-2"></span></label>
-                    <div class="relative group">
-                        <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-slate-300 group-focus-within:text-indigo-500 transition-colors">
-                            <i class="fas fa-layer-group"></i>
-                        </div>
-                        <input type="number" name="floor" id="floor" min="0" class="form-input-premium pl-12" value="{{ old('floor', $room->floor) }}" required>
-                    </div>
+                    <label for="floor" class="form-label-premium">Floor Level</label>
+                    <input type="text" name="floor" id="floor" class="form-input-premium" placeholder="e.g. Ground Floor" value="{{ old('floor', $room->floor) }}">
                     @error('floor') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label for="capacity" class="form-label-premium">Beds <span id="capacity-hint" class="text-[9px] lowercase font-normal italic opacity-60 ml-1"></span></label>
-                        <input type="number" name="capacity" id="capacity" min="1" class="form-input-premium" value="{{ old('capacity', $room->capacity) }}" required>
-                        @error('capacity') <p class="mt-1 text-[9px] font-black uppercase text-rose-500 tracking-wider">{{ $message }}</p> @enderror
-                    </div>
-                    <div>
-                        <label for="type" class="form-label-premium">Room Type</label>
-                        <select name="type" id="type" class="form-input-premium appearance-none">
-                            <option value="single" {{ old('type', $room->type) == 'single' ? 'selected' : '' }}>Single</option>
-                            <option value="double" {{ old('type', $room->type) == 'double' ? 'selected' : '' }}>Double</option>
-                            <option value="triple" {{ old('type', $room->type) == 'triple' ? 'selected' : '' }}>Triple</option>
-                            <option value="dormitory" {{ old('type', $room->type) == 'dormitory' ? 'selected' : '' }}>Dormitory</option>
-                        </select>
-                    </div>
-                </div>
-
                 <div>
-                    <label for="price" class="form-label-premium">Monthly Rent / Price</label>
-                    <div class="relative group">
-                        <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-slate-300 group-focus-within:text-emerald-500 transition-colors">
-                            <i class="fas fa-dollar-sign"></i>
-                        </div>
-                        <input type="number" step="0.01" name="price" id="price" class="form-input-premium pl-12" placeholder="0.00" value="{{ old('price', $room->price) }}" required>
-                    </div>
+                    <label for="accommodation" class="form-label-premium">Accommodation Capacity (Beds)</label>
+                    <input type="number" name="accommodation" id="accommodation" class="form-input-premium" min="1" max="20" value="{{ old('accommodation', $room->accommodation) }}" required>
+                    @error('accommodation') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                 </div>
+            </div>
 
-                <div>
-                    <label for="status" class="form-label-premium">Current Operational Status</label>
-                    <select name="status" id="status" class="form-input-premium appearance-none">
-                        <option value="vacant" {{ old('status', $room->status) == 'vacant' ? 'selected' : '' }}>Vacant & Available</option>
-                        <option value="occupied" {{ old('status', $room->status) == 'occupied' ? 'selected' : '' }}>Occupied</option>
-                        <option value="maintenance" {{ old('status', $room->status) == 'maintenance' ? 'selected' : '' }}>Under Maintenance</option>
-                    </select>
+            <div class="flex flex-col space-y-4 mt-6 p-6 bg-slate-50/50 rounded-2xl border border-slate-100">
+                <div class="flex items-center">
+                    <input type="checkbox" name="is_available" id="is_available" class="w-5 h-5 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500" {{ old('is_available', $room->is_available) ? 'checked' : '' }}>
+                    <label for="is_available" class="ml-3 text-sm font-bold text-slate-700">Room is Available for Assignment</label>
+                </div>
+                
+                <div class="flex items-center">
+                    <input type="checkbox" name="is_full" id="is_full" class="w-5 h-5 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500" {{ old('is_full', $room->is_full) ? 'checked' : '' }}>
+                    <label for="is_full" class="ml-3 text-sm font-bold text-slate-700">Room is Currently at Full Capacity</label>
                 </div>
             </div>
 
             <div class="flex items-center justify-end space-x-6 pt-10 border-t border-slate-100">
-                <a href="{{ route('rooms.index') }}" class="text-xs font-black uppercase tracking-widest text-slate-600 hover:text-slate-800 transition-colors">
-                    Discard
+                <a href="{{ route('rooms.index') }}" class="text-xs font-black uppercase tracking-widest text-slate-500 hover:text-slate-800 transition-colors">
+                    Cancel Operation
                 </a>
-                <button type="submit" class="btn-premium px-10">
-                    <i class="fas fa-check-circle mr-2 opacity-70"></i> Update Room
+                <button type="submit" class="btn-premium px-10 py-4">
+                    <i class="fas fa-save mr-2 opacity-70"></i> Update Room
                 </button>
             </div>
         </form>
     </div>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const buildingSelect = document.getElementById('building_id');
-        const floorInput = document.getElementById('floor');
-        const capacityInput = document.getElementById('capacity');
-        const floorHint = document.getElementById('floor-hint');
-        const capacityHint = document.getElementById('capacity-hint');
-
-        function updateLimits() {
-            const selectedOption = buildingSelect.options[buildingSelect.selectedIndex];
-            if (selectedOption && selectedOption.value) {
-                const maxFloors = selectedOption.getAttribute('data-floors');
-                const maxCapacity = selectedOption.getAttribute('data-capacity');
-
-                floorInput.max = maxFloors;
-                capacityInput.max = maxCapacity;
-
-                floorHint.textContent = `(Max: ${maxFloors})`;
-                capacityHint.textContent = `(Max: ${maxCapacity})`;
-            }
-        }
-
-        buildingSelect.addEventListener('change', updateLimits);
-        updateLimits(); // Initial run
-    });
-</script>
 @endsection
