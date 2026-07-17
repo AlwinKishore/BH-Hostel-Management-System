@@ -106,19 +106,19 @@
                 <a href="{{ route('rooms.index') }}" class="nav-link-premium {{ request()->routeIs('rooms.*') ? 'active' : '' }}">
                     <i class="fas fa-door-open mr-4 opacity-70"></i> Rooms
                 </a>
-                <a href="#" class="nav-link-premium">
+                <a href="{{ route('students.index') }}" class="nav-link-premium {{ request()->routeIs('students.*') ? 'active' : '' }}">
                     <i class="fas fa-user-graduate mr-4 opacity-70"></i> Hostellers
                 </a>
                 
                 <div class="px-9 py-4 uppercase text-[10px] font-black text-slate-400 tracking-[0.25em]">Operations</div>
                 
-                <a href="#" class="nav-link-premium">
+                <a href="{{ route('leaves.index') }}" class="nav-link-premium {{ request()->routeIs('leaves.*') ? 'active' : '' }}">
                     <i class="fas fa-envelope-open-text mr-4 opacity-70"></i> Leaves
                 </a>
-                <a href="#" class="nav-link-premium">
+                <a href="{{ route('attendance.index') }}" class="nav-link-premium {{ request()->routeIs('attendance.*') ? 'active' : '' }}">
                     <i class="fas fa-calendar-check mr-4 opacity-70"></i> Attendance
                 </a>
-                <a href="#" class="nav-link-premium">
+                <a href="{{ route('remarks.index') }}" class="nav-link-premium {{ request()->routeIs('remarks.*') ? 'active' : '' }}">
                     <i class="fas fa-comment-dots mr-4 opacity-70"></i> Remarks
                 </a>
                 

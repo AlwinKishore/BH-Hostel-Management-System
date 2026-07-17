@@ -58,12 +58,12 @@
 
             <div class="flex flex-col space-y-4 mt-6 p-6 bg-slate-50/50 rounded-2xl border border-slate-100">
                 <div class="flex items-center">
-                    <input type="checkbox" name="is_available" id="is_available" class="w-5 h-5 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500" {{ old('is_available', true) ? 'checked' : '' }}>
+                    <input type="checkbox" value="1" name="is_available" id="is_available" class="w-5 h-5 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500" {{ old('is_available', true) ? 'checked' : '' }}>
                     <label for="is_available" class="ml-3 text-sm font-bold text-slate-700">Room is Available for Assignment</label>
                 </div>
                 
                 <div class="flex items-center">
-                    <input type="checkbox" name="is_full" id="is_full" class="w-5 h-5 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500" {{ old('is_full') ? 'checked' : '' }}>
+                    <input type="checkbox" value="1" name="is_full" id="is_full" class="w-5 h-5 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500" {{ old('is_full') ? 'checked' : '' }}>
                     <label for="is_full" class="ml-3 text-sm font-bold text-slate-700">Room is Currently at Full Capacity</label>
                 </div>
             </div>

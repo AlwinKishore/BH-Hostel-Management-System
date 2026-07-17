@@ -42,7 +42,7 @@
                 </div>
 
                 <div class="flex items-center mt-4">
-                    <input type="checkbox" name="is_current" id="is_current" class="w-5 h-5 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500" {{ old('is_current') ? 'checked' : '' }}>
+                    <input type="checkbox" value="1" name="is_current" id="is_current" class="w-5 h-5 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500" {{ old('is_current') ? 'checked' : '' }}>
                     <label for="is_current" class="ml-3 text-sm font-bold text-slate-700">Set as Current Active Batch</label>
                 </div>
             </div>

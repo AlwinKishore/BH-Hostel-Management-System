@@ -5,11 +5,11 @@
 @section('content')
 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10">
     <div>
-        <h3 class="text-3xl font-black text-slate-800 tracking-tight">Categories</h3>
-        <p class="text-sm text-slate-600 font-medium">Manage generic categorization (e.g., Leave types, Room types)</p>
+        <h3 class="text-3xl font-black text-slate-800 tracking-tight">Room Categories</h3>
+        <p class="text-sm text-slate-600 font-medium">Manage room categorization (e.g., Standard, Deluxe)</p>
     </div>
     <a href="{{ route('categories.create') }}" class="btn-premium">
-        <i class="fas fa-plus mr-2 opacity-70"></i> Create Category
+        <i class="fas fa-plus mr-2 opacity-70"></i> Create Room Category
     </a>
 </div>
 

@@ -19,6 +19,7 @@
             <thead>
                 <tr>
                     <th>Year Designation</th>
+                    <th>Batch</th>
                     <th>Status</th>
                     <th class="text-right">Operations</th>
                 </tr>
@@ -28,6 +29,9 @@
                 <tr class="group">
                     <td>
                         <div class="font-bold text-slate-800 tracking-tight">{{ $year->year_name }}</div>
+                    </td>
+                    <td>
+                        <span class="text-slate-600">{{ $year->batch ? $year->batch->batch_name : 'N/A' }}</span>
                     </td>
                     <td>
                         @if($year->is_active)
@@ -57,7 +61,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="3" class="text-center py-20 italic font-bold text-slate-400">
+                    <td colspan="4" class="text-center py-20 italic font-bold text-slate-400">
                         No academic years found.
                     </td>
                 </tr>

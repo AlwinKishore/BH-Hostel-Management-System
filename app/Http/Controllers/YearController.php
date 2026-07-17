@@ -9,19 +9,21 @@ class YearController extends Controller
 {
     public function index()
     {
-        $years = Year::latest()->paginate(10);
+        $years = Year::with('batch')->latest()->paginate(10);
         return view('admin.years.index', compact('years'));
     }
 
     public function create()
     {
-        return view('admin.years.create');
+        $batches = \App\Models\Batch::latest()->get();
+        return view('admin.years.create', compact('batches'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'year_name' => 'required|string|max:50|unique:years,year_name',
+            'batch_id' => 'nullable|exists:batches,id',
             'is_active' => 'boolean'
         ]);
 
@@ -35,13 +37,15 @@ class YearController extends Controller
 
     public function edit(Year $year)
     {
-        return view('admin.years.edit', compact('year'));
+        $batches = \App\Models\Batch::latest()->get();
+        return view('admin.years.edit', compact('year', 'batches'));
     }
 
     public function update(Request $request, Year $year)
     {
         $validated = $request->validate([
             'year_name' => 'required|string|max:50|unique:years,year_name,' . $year->id,
+            'batch_id' => 'nullable|exists:batches,id',
             'is_active' => 'boolean'
         ]);
 

@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
-use App\Models\Student;
-use App\Models\Building;
+use App\Models\Hosteller;
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
@@ -15,23 +14,14 @@ class AttendanceController extends Controller
     public function index(Request $request)
     {
         $date = $request->get('date', date('Y-m-d'));
-        $building_id = $request->get('building_id');
         
-        $buildings = Building::active()->get();
-        
-        $query = Student::with(['attendances' => function($q) use ($date) {
-            $q->where('date', $date);
+        $query = Hosteller::with(['attendances' => function($q) use ($date) {
+            $q->where('attendance_date', $date);
         }]);
 
-        if ($building_id) {
-            $query->whereHas('room', function($q) use ($building_id) {
-                $q->where('building_id', $building_id);
-            });
-        }
+        $students = $query->get();
 
-        $students = $query->where('status', 'active')->get();
-
-        return view('admin.attendance.index', compact('students', 'date', 'buildings', 'building_id'));
+        return view('admin.attendance.index', compact('students', 'date'));
     }
 
     /**
@@ -54,11 +44,17 @@ class AttendanceController extends Controller
 
         $date = $request->date;
 
-        foreach ($request->attendance as $student_id => $status) {
-            Attendance::updateOrCreate(
-                ['student_id' => $student_id, 'date' => $date],
-                ['status' => $status]
-            );
+        if ($request->has('attendance')) {
+            foreach ($request->attendance as $hosteller_id => $status) {
+                Attendance::updateOrCreate(
+                    ['hosteller_id' => $hosteller_id, 'attendance_date' => $date],
+                    [
+                        'is_present' => ($status === 'present'),
+                        'submitted_by' => auth()->id(),
+                        'created_by' => auth()->id()
+                    ]
+                );
+            }
         }
 
         return redirect()->back()->with('success', 'Attendance marked successfully.');

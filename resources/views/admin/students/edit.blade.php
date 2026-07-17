@@ -34,43 +34,46 @@
                     
                     <div class="space-y-6">
                         <div>
-                            <label for="name" class="form-label-premium">Student Full Name</label>
-                            <input type="text" name="name" id="name" class="form-input-premium" value="{{ old('name', $student->name) }}" required>
-                            @error('name') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
+                            <label for="student_name" class="form-label-premium">Student Full Name</label>
+                            <input type="text" name="student_name" id="student_name" class="form-input-premium" value="{{ old('student_name', $student->student_name) }}" required>
+                            @error('student_name') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label for="email" class="form-label-premium">Electronic Mail</label>
-                                <input type="email" name="email" id="email" class="form-input-premium" value="{{ old('email', $student->email) }}" required>
-                                @error('email') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
+                                <label for="hostel_no" class="form-label-premium">Hostel Number</label>
+                                <input type="number" name="hostel_no" id="hostel_no" class="form-input-premium" value="{{ old('hostel_no', $student->hostel_no) }}" required>
+                                @error('hostel_no') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                             </div>
 
                             <div>
-                                <label for="phone" class="form-label-premium">Mobile Number</label>
-                                <input type="text" name="phone" id="phone" class="form-input-premium" value="{{ old('phone', $student->phone) }}" required>
-                                @error('phone') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
+                                <label for="dno" class="form-label-premium">D.No</label>
+                                <input type="text" name="dno" id="dno" class="form-input-premium" value="{{ old('dno', $student->dno) }}">
+                                @error('dno') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label for="id_proof_type" class="form-label-premium">Credential Type</label>
-                                <div class="relative group">
-                                    <select name="id_proof_type" id="id_proof_type" class="form-input-premium appearance-none">
-                                        <option value="Aadhaar" {{ old('id_proof_type', $student->id_proof_type) == 'Aadhaar' ? 'selected' : '' }}>National ID / Aadhaar</option>
-                                        <option value="Passport" {{ old('id_proof_type', $student->id_proof_type) == 'Passport' ? 'selected' : '' }}>Passport</option>
-                                        <option value="Driving License" {{ old('id_proof_type', $student->id_proof_type) == 'Driving License' ? 'selected' : '' }}>Driving License</option>
-                                        <option value="Student ID" {{ old('id_proof_type', $student->id_proof_type) == 'Student ID' ? 'selected' : '' }}>University ID</option>
-                                    </select>
-                                    <div class="absolute inset-y-0 right-0 pr-5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-indigo-500 transition-colors">
-                                        <i class="fas fa-chevron-down text-xs"></i>
-                                    </div>
-                                </div>
+                                <label for="batch_id" class="form-label-premium">Batch</label>
+                                <select name="batch_id" id="batch_id" class="form-input-premium appearance-none">
+                                    <option value="">Select Batch</option>
+                                    @foreach($batches as $batch)
+                                        <option value="{{ $batch->id }}" {{ old('batch_id', $student->batch_id) == $batch->id ? 'selected' : '' }}>{{ $batch->batch_name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('batch_id') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                             </div>
+                            
                             <div>
-                                <label for="id_proof_number" class="form-label-premium">Credential Serial #</label>
-                                <input type="text" name="id_proof_number" id="id_proof_number" class="form-input-premium" value="{{ old('id_proof_number', $student->id_proof_number) }}">
+                                <label for="year_id" class="form-label-premium">Academic Year</label>
+                                <select name="year_id" id="year_id" class="form-input-premium appearance-none">
+                                    <option value="">Select Year</option>
+                                    @foreach($years as $year)
+                                        <option value="{{ $year->id }}" {{ old('year_id', $student->year_id) == $year->id ? 'selected' : '' }}>{{ $year->year_name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('year_id') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                             </div>
                         </div>
                     </div>
@@ -89,10 +92,11 @@
                         <div>
                             <label for="room_id" class="form-label-premium">Designated Residential Unit</label>
                             <div class="relative group">
-                                <select name="room_id" id="room_id" class="form-input-premium appearance-none" required>
+                                <select name="room_id" id="room_id" class="form-input-premium appearance-none">
+                                    <option value="">Select Room</option>
                                     @foreach($rooms as $room)
-                                        <option value="{{ $room->id }}" data-price="{{ $room->price }}" {{ old('room_id', $student->room_id) == $room->id ? 'selected' : '' }}>
-                                            {{ $room->room_number }} - {{ $room->building->name }} (Floor {{ $room->floor }}) — {{ $room->capacity - $room->students_count }} beds free
+                                        <option value="{{ $room->id }}" {{ old('room_id', $student->room_id) == $room->id ? 'selected' : '' }}>
+                                            Room {{ $room->room_no }} (Floor {{ $room->floor }}) — {{ max(0, $room->accommodation - $room->hostellers_count) }} beds free
                                         </option>
                                     @endforeach
                                 </select>
@@ -101,54 +105,6 @@
                                 </div>
                             </div>
                             @error('room_id') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
-                        </div>
-
-                        <!-- Financial Summary Section -->
-                        <div class="bg-indigo-50/30 rounded-3xl p-8 border border-indigo-100/50 space-y-4">
-                            <div class="flex justify-between items-center text-[10px] font-black uppercase text-indigo-400 tracking-widest">
-                                <span>Financial Records</span>
-                                <span>Status: <span id="payment-status-badge">{{ $student->payment_status }}</span></span>
-                            </div>
-                            <div class="space-y-3">
-                                <div class="flex justify-between text-sm font-bold text-slate-700">
-                                    <span>Base Room Rent</span>
-                                    <span id="room-price-display">₹0.00</span>
-                                </div>
-                                <div class="flex justify-between text-sm font-bold text-slate-700">
-                                    <span>Recurring Service Fees</span>
-                                    @php $otherFees = \App\Models\FeeStructure::sum('amount'); @endphp
-                                    <span id="other-fees-display" data-fees="{{ $otherFees }}">₹{{ number_format($otherFees, 2) }}</span>
-                                </div>
-                                <div class="h-px bg-indigo-100 my-2"></div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-xs font-black uppercase text-slate-800 tracking-wider">Total Monthly Obligation</span>
-                                    <span id="total-bill-display" class="text-xl font-black text-indigo-600">₹0.00</span>
-                                </div>
-                                <div class="flex justify-between items-center pt-2">
-                                    <span class="text-[10px] font-black uppercase text-emerald-600 tracking-wider">Total Amount Paid</span>
-                                    <span class="text-sm font-black text-emerald-600">₹{{ number_format($student->paid_amount, 2) }}</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="joining_date" class="form-label-premium">Enrollment / Joining Date</label>
-                                <input type="date" name="joining_date" id="joining_date" class="form-input-premium" value="{{ old('joining_date', $student->joining_date) }}">
-                            </div>
-                            <div>
-                                <label for="status" class="form-label-premium">Residency Status</label>
-                                <div class="relative group">
-                                    <select name="status" id="status" class="form-input-premium appearance-none">
-                                        <option value="active" {{ old('status', $student->status) == 'active' ? 'selected' : '' }}>Active Resident</option>
-                                        <option value="inactive" {{ old('status', $student->status) == 'inactive' ? 'selected' : '' }}>Inactive</option>
-                                        <option value="alumni" {{ old('status', $student->status) == 'alumni' ? 'selected' : '' }}>Alumni / Checked Out</option>
-                                    </select>
-                                    <div class="absolute inset-y-0 right-0 pr-5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-indigo-500 transition-colors">
-                                        <i class="fas fa-signal text-xs"></i>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -165,26 +121,4 @@
         </form>
     </div>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const roomIdSelect = document.getElementById('room_id');
-        const roomPriceDisplay = document.getElementById('room-price-display');
-        const otherFeesDisplay = document.getElementById('other-fees-display');
-        const totalBillDisplay = document.getElementById('total-bill-display');
-
-        function updateBill() {
-            const selectedOption = roomIdSelect.options[roomIdSelect.selectedIndex];
-            const roomPrice = selectedOption && selectedOption.value ? parseFloat(selectedOption.getAttribute('data-price')) : 0;
-            const otherFees = parseFloat(otherFeesDisplay.getAttribute('data-fees')) || 0;
-            const total = roomPrice + otherFees;
-
-            roomPriceDisplay.textContent = '$' + roomPrice.toFixed(2);
-            totalBillDisplay.textContent = '$' + total.toFixed(2);
-        }
-
-        roomIdSelect.addEventListener('change', updateBill);
-        updateBill(); // Initial run
-    });
-</script>
 @endsection

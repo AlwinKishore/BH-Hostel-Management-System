@@ -21,24 +21,9 @@
                 <input type="date" name="date" id="date" value="{{ $date }}" class="form-input-premium !text-slate-800 !bg-slate-50 !border-slate-200 pl-11">
             </div>
         </div>
-        
-        <div class="flex-1 min-w-[250px]">
-            <label for="building_id" class="form-label-premium">Sector / Building</label>
-            <div class="relative group">
-                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500 group-focus-within:text-indigo-500 transition-colors">
-                    <i class="fas fa-city text-sm"></i>
-                </div>
-                <select name="building_id" id="building_id" class="form-input-premium !text-slate-800 !bg-slate-50 !border-slate-200 pl-11 appearance-none">
-                    <option value="">Full Campus (All Buildings)</option>
-                    @foreach($buildings as $building)
-                        <option value="{{ $building->id }}" {{ $building_id == $building->id ? 'selected' : '' }}>{{ $building->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
 
         <button type="submit" class="btn-premium px-8 py-3.5">
-            <i class="fas fa-bolt mr-2 opacity-70"></i> Run Query
+            <i class="fas fa-bolt mr-2 opacity-70"></i> Load Roster
         </button>
     </form>
 </div>
@@ -60,9 +45,6 @@
                 <div class="flex items-center px-3 py-1.5 rounded-xl bg-rose-50 text-rose-700 text-[10px] font-black uppercase tracking-wider border border-rose-100">
                     <i class="fas fa-user-xmark mr-2"></i> Absent
                 </div>
-                <div class="flex items-center px-3 py-1.5 rounded-xl bg-amber-50 text-amber-700 text-[10px] font-black uppercase tracking-wider border border-amber-100">
-                    <i class="fas fa-clock-rotate-left mr-2"></i> Leave
-                </div>
             </div>
         </div>
 
@@ -70,29 +52,33 @@
             <table class="modern-table">
                 <thead>
                     <tr>
-                        <th>Trainee / Student</th>
-                        <th>Deployment</th>
+                        <th>Hosteller</th>
+                        <th>Room / Hostel</th>
                         <th class="text-center">Status Assignment</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($students as $student)
                     @php
-                        $attendanceStatus = $student->attendances->first()?->status ?? 'present';
+                        $attendanceRecord = $student->attendances->first();
+                        $attendanceStatus = $attendanceRecord ? ($attendanceRecord->is_present ? 'present' : 'absent') : 'present';
                     @endphp
                     <tr class="group">
                         <td>
                             <div class="flex items-center">
                                 <div class="h-10 w-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500 font-black border border-slate-200 mr-4 group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-500 transition-all duration-300">
-                                    {{ substr($student->name, 0, 1) }}
+                                    {{ substr($student->student_name, 0, 1) }}
                                 </div>
-                                <div class="font-bold text-slate-800">{{ $student->name }}</div>
+                                <div>
+                                    <div class="font-bold text-slate-800">{{ $student->student_name }}</div>
+                                    <div class="text-[9px] text-slate-600 uppercase">D.No: {{ $student->dno ?? 'N/A' }}</div>
+                                </div>
                             </div>
                         </td>
                         <td>
                             @if($student->room)
-                                <div class="text-sm font-bold text-slate-700">Room {{ $student->room->room_number }}</div>
-                                <div class="text-[9px] text-slate-600 font-black uppercase tracking-widest">{{ $student->room->building->name }}</div>
+                                <div class="text-sm font-bold text-slate-700">Room {{ $student->room->room_no }}</div>
+                                <div class="text-[9px] text-slate-600 font-black uppercase tracking-widest">Hostel {{ $student->hostel_no }}</div>
                             @else
                                 <span class="text-slate-500 italic text-xs">Unassigned</span>
                             @endif
@@ -112,13 +98,6 @@
                                         <i class="fas fa-times text-lg"></i>
                                     </div>
                                 </label>
-
-                                <label class="cursor-pointer group/opt">
-                                    <input type="radio" name="attendance[{{ $student->id }}]" value="leave" class="hidden peer" {{ $attendanceStatus == 'leave' ? 'checked' : '' }}>
-                                    <div class="w-12 h-12 flex items-center justify-center rounded-2xl border-2 border-slate-100 text-slate-200 peer-checked:bg-amber-500 peer-checked:border-amber-500 peer-checked:text-white peer-checked:shadow-lg peer-checked:shadow-amber-500/30 transition-all duration-200 hover:border-amber-200 active:scale-90">
-                                        <i class="fas fa-mug-hot text-lg"></i>
-                                    </div>
-                                </label>
                             </div>
                         </td>
                     </tr>
@@ -136,7 +115,7 @@
 
         @if($students->isNotEmpty())
         <div class="p-10 bg-slate-50/50 border-t border-slate-100 flex justify-center md:justify-end">
-            <button type="submit" class="btn-primary w-full md:w-auto px-16 py-4 shadow-xl shadow-indigo-600/30">
+            <button type="submit" class="btn-primary bg-indigo-600 text-white hover:bg-indigo-700 px-16 py-4 rounded-xl shadow-xl shadow-indigo-600/30 transition-all font-bold font-sm">
                 <i class="fas fa-cloud-arrow-up mr-3 opacity-70"></i> Commit Roster to Database
             </button>
         </div>

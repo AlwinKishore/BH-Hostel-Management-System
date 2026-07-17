@@ -24,9 +24,9 @@
             
             <div class="space-y-6">
                 <div>
-                    <label for="name" class="form-label-premium">Personnel Full Name</label>
-                    <input type="text" name="name" id="name" class="form-input-premium" value="{{ old('name', $user->name) }}" required>
-                    @error('name') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
+                    <label for="username" class="form-label-premium">Personnel Username</label>
+                    <input type="text" name="username" id="username" class="form-input-premium" value="{{ old('username', $user->username) }}" required>
+                    @error('username') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                 </div>
 
                 <div>

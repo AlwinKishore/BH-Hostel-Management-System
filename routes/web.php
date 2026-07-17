@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
 
     // Hostel Core
     Route::resource('rooms', RoomController::class);
-    Route::resource('hostellers', HostellerController::class);
+    Route::resource('students', HostellerController::class);
  
     // Operations
     Route::resource('leaves', LeaveController::class);

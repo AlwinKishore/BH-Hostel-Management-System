@@ -1,21 +1,21 @@
 @extends('layouts.admin')
 
-@section('header', 'Edit Category')
+@section('header', 'Edit Room Category')
 
 @section('content')
 <div class="max-w-3xl mx-auto">
     <div class="flex items-center space-x-2 text-slate-500 mb-6 font-bold text-[10px] uppercase tracking-widest">
         <a href="{{ route('dashboard') }}" class="hover:text-indigo-600 transition-colors">Portal</a>
         <span>/</span>
-        <a href="{{ route('categories.index') }}" class="hover:text-indigo-600 transition-colors">Categories</a>
+        <a href="{{ route('categories.index') }}" class="hover:text-indigo-600 transition-colors">Room Categories</a>
         <span>/</span>
-        <span class="text-slate-800">Edit Category</span>
+        <span class="text-slate-800">Edit Room Category</span>
     </div>
 
     <div class="glass-card p-10 border-none shadow-2xl shadow-slate-200/60">
         <div class="mb-10">
-            <h3 class="text-2xl font-black text-slate-800 tracking-tight">Modify Category Details</h3>
-            <p class="text-sm text-slate-600 font-medium">Update the category properties</p>
+            <h3 class="text-2xl font-black text-slate-800 tracking-tight">Modify Room Category Details</h3>
+            <p class="text-sm text-slate-600 font-medium">Update the room category properties</p>
         </div>
 
         <form action="{{ route('categories.update', $category) }}" method="POST" class="space-y-8">
@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="flex items-center mt-4">
-                    <input type="checkbox" name="is_active" id="is_active" class="w-5 h-5 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500" {{ old('is_active', $category->is_active) ? 'checked' : '' }}>
+                    <input type="checkbox" value="1" name="is_active" id="is_active" class="w-5 h-5 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500" {{ old('is_active', $category->is_active) ? 'checked' : '' }}>
                     <label for="is_active" class="ml-3 text-sm font-bold text-slate-700">Category is Active</label>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                     Cancel Operation
                 </a>
                 <button type="submit" class="btn-premium px-10 py-4">
-                    <i class="fas fa-save mr-2 opacity-70"></i> Update Category
+                    <i class="fas fa-save mr-2 opacity-70"></i> Update Room Category
                 </button>
             </div>
         </form>
