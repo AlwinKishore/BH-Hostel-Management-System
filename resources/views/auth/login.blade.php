@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="mb-8">
         <h2 class="text-3xl font-black text-white text-center">Login</h2>
-        <div class="w-12 h-1 bg-indigo-500 mx-auto mt-2 rounded-full"></div>
+        <div class="w-12 h-1 bg-white-300 mx-auto mt-2 rounded-full"></div>
     </div>
 
     <!-- Session Status -->

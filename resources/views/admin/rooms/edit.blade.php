@@ -24,15 +24,15 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                    <label for="room_no" class="form-label-premium">Room Number</label>
-                    <input type="text" name="room_no" id="room_no" class="form-input-premium" placeholder="e.g. A-101" value="{{ old('room_no', $room->room_no) }}" required>
+                    <label for="room_no" class="form-label-premium">Room Number <span class="text-rose-500">*</span></label>
+                    <input type="text" name="room_no" id="room_no" class="form-input-premium" value="{{ old('room_no', $room->room_no) }}" required>
                     @error('room_no') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
-                    <label for="room_category" class="form-label-premium">Room Category</label>
-                    <select name="room_category" id="room_category" class="form-input-premium">
-                        <option value="">-- Select Category (Optional) --</option>
+                    <label for="room_category" class="form-label-premium">Room Category <span class="text-rose-500">*</span></label>
+                    <select name="room_category" id="room_category" class="form-input-premium" required>
+                        <option value="">-- Select Category --</option>
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}" {{ old('room_category', $room->room_category) == $category->id ? 'selected' : '' }}>
                                 {{ $category->category_name }}
@@ -45,13 +45,13 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                    <label for="floor" class="form-label-premium">Floor Level</label>
-                    <input type="text" name="floor" id="floor" class="form-input-premium" placeholder="e.g. Ground Floor" value="{{ old('floor', $room->floor) }}">
+                    <label for="floor" class="form-label-premium">Floor Level <span class="text-rose-500">*</span></label>
+                    <input type="text" name="floor" id="floor" class="form-input-premium" value="{{ old('floor', $room->floor) }}" required>
                     @error('floor') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
-                    <label for="accommodation" class="form-label-premium">Accommodation Capacity (Beds)</label>
+                    <label for="accommodation" class="form-label-premium">Accommodation Capacity (Beds) <span class="text-rose-500">*</span></label>
                     <input type="number" name="accommodation" id="accommodation" class="form-input-premium" min="1" max="20" value="{{ old('accommodation', $room->accommodation) }}" required>
                     @error('accommodation') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                 </div>
@@ -71,7 +71,7 @@
 
             <div class="flex items-center justify-end space-x-6 pt-10 border-t border-slate-100">
                 <a href="{{ route('rooms.index') }}" class="text-xs font-black uppercase tracking-widest text-slate-500 hover:text-slate-800 transition-colors">
-                    Cancel Operation
+                    Cancel
                 </a>
                 <button type="submit" class="btn-premium px-10 py-4">
                     <i class="fas fa-save mr-2 opacity-70"></i> Update Room

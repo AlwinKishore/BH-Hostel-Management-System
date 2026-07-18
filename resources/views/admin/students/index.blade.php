@@ -5,11 +5,11 @@
 @section('content')
 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10">
     <div>
-        <h3 class="text-3xl font-black text-slate-800 tracking-tight">Student Hub</h3>
+        <h3 class="text-3xl font-black text-slate-800 tracking-tight">Hosteller Hub</h3>
         <p class="text-sm text-slate-600 font-medium">Register and manage tenants across buildings</p>
     </div>
     <a href="{{ route('students.create') }}" class="btn-premium">
-        <i class="fas fa-user-plus mr-2 opacity-70"></i> Register Student
+        <i class="fas fa-user-plus mr-2 opacity-70"></i> Register Hosteller
     </a>
 </div>
 
@@ -58,9 +58,9 @@
                         @endif
                     </td>
                     <td class="text-right">
-                        <div class="flex justify-end space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div class="flex justify-end space-x-1 transition-opacity">
                             <a href="{{ route('students.edit', $student) }}" class="p-2 text-slate-500 hover:text-indigo-600 transition-colors">
-                                <i class="fas fa-fingerprint"></i>
+                                <i class="fas fa-edit"></i>
                             </a>
                             <form action="{{ route('students.destroy', $student) }}" method="POST" class="inline-block">
                                 @csrf

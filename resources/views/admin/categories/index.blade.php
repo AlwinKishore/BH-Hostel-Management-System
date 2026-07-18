@@ -20,7 +20,7 @@
                 <tr>
                     <th>Category Name</th>
                     <th>Status</th>
-                    <th class="text-right">Operations</th>
+                    <th class="text-right">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,14 +41,14 @@
                         @endif
                     </td>
                     <td class="text-right">
-                        <div class="flex justify-end space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div class="flex justify-end space-x-1 transition-opacity">
                             <a href="{{ route('categories.edit', $category) }}" class="p-2 text-slate-400 hover:text-indigo-600 transition-colors">
                                 <i class="fas fa-edit"></i>
                             </a>
                             <form action="{{ route('categories.destroy', $category) }}" method="POST" class="inline-block">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="p-2 text-slate-400 hover:text-rose-600 transition-colors" onclick="return confirm('Are you sure you want to delete this category?')">
+                                <button type="submit" class="p-2 text-slate-400 hover:text-rose-600 transition-colors" onclick="return confirm('Deleting this room category will remove the category from all associated rooms. Do you want to proceed?')">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </form>

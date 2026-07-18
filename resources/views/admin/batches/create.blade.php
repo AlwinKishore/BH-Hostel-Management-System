@@ -23,20 +23,20 @@
             
             <div class="space-y-6">
                 <div>
-                    <label for="batch_name" class="form-label-premium">Batch Name</label>
+                    <label for="batch_name" class="form-label-premium">Batch Name <span class="text-red-500">*</span></label>
                     <input type="text" name="batch_name" id="batch_name" class="form-input-premium" placeholder="e.g. Batch 2026-2028" value="{{ old('batch_name') }}" required>
                     @error('batch_name') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
-                        <label for="start_date" class="form-label-premium">Start Date (Optional)</label>
-                        <input type="date" name="start_date" id="start_date" class="form-input-premium" value="{{ old('start_date') }}">
+                        <label for="start_date" class="form-label-premium">Start Date <span class="text-red-500">*</span></label>
+                        <input type="date" name="start_date" id="start_date" class="form-input-premium" value="{{ old('start_date') }}" required>
                         @error('start_date') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                     </div>
                     <div>
-                        <label for="end_date" class="form-label-premium">End Date (Optional)</label>
-                        <input type="date" name="end_date" id="end_date" class="form-input-premium" value="{{ old('end_date') }}">
+                        <label for="end_date" class="form-label-premium">End Date <span class="text-red-500">*</span></label>
+                        <input type="date" name="end_date" id="end_date" class="form-input-premium" value="{{ old('end_date') }}" required>
                         @error('end_date') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                     </div>
                 </div>
@@ -49,7 +49,7 @@
 
             <div class="flex items-center justify-end space-x-6 pt-10 border-t border-slate-100">
                 <a href="{{ route('batches.index') }}" class="text-xs font-black uppercase tracking-widest text-slate-500 hover:text-slate-800 transition-colors">
-                    Cancel Operation
+                    Cancel
                 </a>
                 <button type="submit" class="btn-premium px-10 py-4">
                     <i class="fas fa-save mr-2 opacity-70"></i> Save Batch

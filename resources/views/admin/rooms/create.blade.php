@@ -23,15 +23,16 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                    <label for="room_no" class="form-label-premium">Room Number</label>
-                    <input type="text" name="room_no" id="room_no" class="form-input-premium" placeholder="e.g. A-101" value="{{ old('room_no') }}" required>
+                    <label for="room_no" class="form-label-premium">Room Number <span class="text-rose-500">*</span></label>
+                    <input type="text" name="room_no" id="room_no" class="form-input-premium" value="{{ old('room_no') }}" required>
+                    <!-- placeholder="e.g. A-101" -->
                     @error('room_no') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
-                    <label for="room_category" class="form-label-premium">Room Category</label>
-                    <select name="room_category" id="room_category" class="form-input-premium">
-                        <option value="">-- Select Category (Optional) --</option>
+                    <label for="room_category" class="form-label-premium">Room Category <span class="text-rose-500">*</span></label>
+                    <select name="room_category" id="room_category" class="form-input-premium" required>
+                        <option value="">-- Select Category --</option>
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}" {{ old('room_category') == $category->id ? 'selected' : '' }}>
                                 {{ $category->category_name }}
@@ -44,14 +45,16 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                    <label for="floor" class="form-label-premium">Floor Level</label>
-                    <input type="text" name="floor" id="floor" class="form-input-premium" placeholder="e.g. Ground Floor, 1st Floor" value="{{ old('floor') }}">
+                    <label for="floor" class="form-label-premium">Floor Level <span class="text-rose-500">*</span></label>
+                    <input type="text" name="floor" id="floor" class="form-input-premium" value="{{ old('floor') }}" required>
+                    <!-- placeholder="e.g. Ground Floor, 1st Floor" -->
                     @error('floor') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
-                    <label for="accommodation" class="form-label-premium">Accommodation Capacity (Beds)</label>
-                    <input type="number" name="accommodation" id="accommodation" class="form-input-premium" min="1" max="20" placeholder="e.g. 2" value="{{ old('accommodation', 1) }}" required>
+                    <label for="accommodation" class="form-label-premium">Accommodation Capacity (Beds) <span class="text-rose-500">*</span></label>
+                    <input type="number" name="accommodation" id="accommodation" class="form-input-premium" min="1" max="20" value="{{ old('accommodation', 1) }}" required>
+                    <!-- placeholder="e.g. 2"  -->
                     @error('accommodation') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                 </div>
             </div>
@@ -62,15 +65,15 @@
                     <label for="is_available" class="ml-3 text-sm font-bold text-slate-700">Room is Available for Assignment</label>
                 </div>
                 
-                <div class="flex items-center">
+                <!-- <div class="flex items-center">
                     <input type="checkbox" value="1" name="is_full" id="is_full" class="w-5 h-5 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500" {{ old('is_full') ? 'checked' : '' }}>
                     <label for="is_full" class="ml-3 text-sm font-bold text-slate-700">Room is Currently at Full Capacity</label>
-                </div>
+                </div> -->
             </div>
 
             <div class="flex items-center justify-end space-x-6 pt-10 border-t border-slate-100">
                 <a href="{{ route('rooms.index') }}" class="text-xs font-black uppercase tracking-widest text-slate-500 hover:text-slate-800 transition-colors">
-                    Cancel Operation
+                    Cancel
                 </a>
                 <button type="submit" class="btn-premium px-10 py-4">
                     <i class="fas fa-save mr-2 opacity-70"></i> Save Room

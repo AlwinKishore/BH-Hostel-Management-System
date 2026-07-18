@@ -23,15 +23,15 @@
             
             <div class="space-y-6">
                 <div>
-                    <label for="year_name" class="form-label-premium">Year Designation</label>
+                    <label for="year_name" class="form-label-premium">Year Designation <span class="text-red-500">*</span></label>
                     <input type="text" name="year_name" id="year_name" class="form-input-premium" placeholder="e.g. 1st Year, 2nd Year, Senior" value="{{ old('year_name') }}" required>
                     @error('year_name') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
-                    <label for="batch_id" class="form-label-premium">Related Batch</label>
-                    <select name="batch_id" id="batch_id" class="form-input-premium">
-                        <option value="">-- Select Batch (Optional) --</option>
+                    <label for="batch_id" class="form-label-premium">Related Batch <span class="text-red-500">*</span></label>
+                    <select name="batch_id" id="batch_id" class="form-input-premium" required>
+                        <option value="">-- Select Batch --</option>
                         @foreach($batches as $batch)
                             <option value="{{ $batch->id }}" {{ old('batch_id') == $batch->id ? 'selected' : '' }}>
                                 {{ $batch->batch_name }}
@@ -49,7 +49,7 @@
 
             <div class="flex items-center justify-end space-x-6 pt-10 border-t border-slate-100">
                 <a href="{{ route('years.index') }}" class="text-xs font-black uppercase tracking-widest text-slate-500 hover:text-slate-800 transition-colors">
-                    Cancel Operation
+                    Cancel
                 </a>
                 <button type="submit" class="btn-premium px-10 py-4">
                     <i class="fas fa-save mr-2 opacity-70"></i> Save Year

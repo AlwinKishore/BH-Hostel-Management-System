@@ -22,7 +22,7 @@
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Status</th>
-                    <th class="text-right">Operations</th>
+                    <th class="text-right">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -49,14 +49,14 @@
                         @endif
                     </td>
                     <td class="text-right">
-                        <div class="flex justify-end space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div class="flex justify-end space-x-1 transition-opacity"> <!-- opacity-0 group-hover:opacity-100 -->
                             <a href="{{ route('batches.edit', $batch) }}" class="p-2 text-slate-400 hover:text-indigo-600 transition-colors">
                                 <i class="fas fa-edit"></i>
                             </a>
                             <form action="{{ route('batches.destroy', $batch) }}" method="POST" class="inline-block">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="p-2 text-slate-400 hover:text-rose-600 transition-colors" onclick="return confirm('Are you sure you want to delete this batch?')">
+                                <button type="submit" class="p-2 text-slate-400 hover:text-rose-600 transition-colors" onclick="return confirm('Deleting this batch will also delete all associated academic years. Do you want to proceed?')">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </form>

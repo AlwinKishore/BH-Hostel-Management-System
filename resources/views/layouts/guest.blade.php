@@ -50,12 +50,12 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased text-slate-900 bg-slate-950">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center py-12 px-4 bg-mesh selection:bg-indigo-500 selection:text-white">
+        <div class="min-h-screen flex flex-col sm:justify-center items-center py-12 px-4 bg-white selection:bg-indigo-500 selection:text-white">
             <div class="mb-10 text-center">
                 <div class="inline-flex items-center justify-center w-20 h-20 bg-indigo-600 rounded-3xl shadow-2xl shadow-indigo-500/20 mb-4 transform -rotate-6 transition-transform hover:rotate-0 duration-300">
                     <i class="fas fa-h text-4xl text-white"></i>
                 </div>
-                <h1 class="text-4xl font-black tracking-tight text-white uppercase italic">
+                <h1 class="text-4xl font-black tracking-tight text-indigo-500 uppercase italic">
                     BH <span class="text-indigo-500">Hostel</span>
                 </h1>
                 <p class="text-slate-400 text-xs font-bold uppercase tracking-[0.2em] mt-2">Management System</p>

@@ -22,7 +22,7 @@
                     <th>Category</th>
                     <th>Capacity</th>
                     <th>Availability</th>
-                    <th class="text-right">Operations</th>
+                    <th class="text-right">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,7 +34,7 @@
                                 {{ substr($room->room_no, 0, 2) }}
                             </div>
                             <div>
-                                <div class="font-bold text-slate-800 tracking-tight">Room {{ $room->room_no }}</div>
+                                <div class="font-bold text-slate-800 tracking-tight">{{ $room->room_no }}</div>
                                 <div class="text-[10px] uppercase font-black tracking-widest text-slate-400">Floor: {{ $room->floor ?? 'N/A' }}</div>
                             </div>
                         </div>
@@ -48,11 +48,11 @@
                     <td>
                         @if(!$room->is_available)
                             <span class="px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-full bg-rose-100 text-rose-700 border border-rose-200">
-                                Maintenance
+                                Unavailable
                             </span>
                         @elseif($room->is_full)
                             <span class="px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-full bg-amber-100 text-amber-700 border border-amber-200">
-                                Full Capacity
+                                Filled
                             </span>
                         @else
                             <span class="px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200">
@@ -61,14 +61,14 @@
                         @endif
                     </td>
                     <td class="text-right">
-                        <div class="flex justify-end space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div class="flex justify-end space-x-1 transition-opacity">
                             <a href="{{ route('rooms.edit', $room) }}" class="p-2 text-slate-400 hover:text-indigo-600 transition-colors">
                                 <i class="fas fa-edit"></i>
                             </a>
                             <form action="{{ route('rooms.destroy', $room) }}" method="POST" class="inline-block">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="p-2 text-slate-400 hover:text-rose-600 transition-colors" onclick="return confirm('Are you sure you want to delete this room?')">
+                                <button type="submit" class="p-2 text-slate-400 hover:text-rose-600 transition-colors" onclick="return confirm('Deleting this room will update all associated hosteller records. Do you want to proceed?')">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </form>

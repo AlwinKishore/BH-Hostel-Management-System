@@ -23,20 +23,21 @@
             
             <div class="space-y-6">
                 <div>
-                    <label for="category_name" class="form-label-premium">Category Name</label>
-                    <input type="text" name="category_name" id="category_name" class="form-input-premium" placeholder="e.g. Standard Room, Deluxe Room" value="{{ old('category_name') }}" required>
+                    <label for="category_name" class="form-label-premium">Category Name <span class="text-red-500">*</span></label>
+                    <input type="text" name="category_name" id="category_name" class="form-input-premium" value="{{ old('category_name') }}" required>
+                    <!-- placeholder="e.g. Standard Room, Deluxe Room" -->
                     @error('category_name') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                 </div>
 
                 <div class="flex items-center mt-4">
                     <input type="checkbox" value="1" name="is_active" id="is_active" class="w-5 h-5 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500" {{ old('is_active', true) ? 'checked' : '' }}>
-                    <label for="is_active" class="ml-3 text-sm font-bold text-slate-700">Category is Active</label>
+                    <label for="is_active" class="ml-3 text-sm font-bold text-slate-700">Is Category Active</label>
                 </div>
             </div>
 
             <div class="flex items-center justify-end space-x-6 pt-10 border-t border-slate-100">
                 <a href="{{ route('categories.index') }}" class="text-xs font-black uppercase tracking-widest text-slate-500 hover:text-slate-800 transition-colors">
-                    Cancel Operation
+                    Cancel
                 </a>
                 <button type="submit" class="btn-premium px-10 py-4">
                     <i class="fas fa-save mr-2 opacity-70"></i> Save Category

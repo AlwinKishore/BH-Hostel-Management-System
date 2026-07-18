@@ -7,14 +7,14 @@
     <div class="flex items-center space-x-3 text-slate-500 mb-10 font-bold text-[10px] uppercase tracking-[0.2em]">
         <a href="{{ route('dashboard') }}" class="hover:text-indigo-600 transition-colors">Dashboard</a>
         <span>/</span>
-        <a href="{{ route('students.index') }}" class="hover:text-indigo-600 transition-colors">Students</a>
+        <a href="{{ route('students.index') }}" class="hover:text-indigo-600 transition-colors">Hostellers</a>
         <span>/</span>
-        <span class="text-slate-800">Edit Profile</span>
+        <span class="text-slate-800">Edit Hosteller</span>
     </div>
 
     <div class="glass-card p-10 border-none shadow-2xl shadow-slate-200/60 transition-transform duration-500 hover:scale-[1.01]">
         <div class="mb-10 text-center md:text-left">
-            <h3 class="text-2xl font-black text-slate-800 tracking-tight">Modify Student Profile</h3>
+            <h3 class="text-2xl font-black text-slate-800 tracking-tight">Modify Hosteller Profile</h3>
             <p class="text-sm text-slate-600 font-medium">Update residency records and personal documentation</p>
         </div>
 
@@ -34,29 +34,29 @@
                     
                     <div class="space-y-6">
                         <div>
-                            <label for="student_name" class="form-label-premium">Student Full Name</label>
+                            <label for="student_name" class="form-label-premium">Hosteller Full Name <span class="text-rose-500">*</span></label>
                             <input type="text" name="student_name" id="student_name" class="form-input-premium" value="{{ old('student_name', $student->student_name) }}" required>
                             @error('student_name') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label for="hostel_no" class="form-label-premium">Hostel Number</label>
+                                <label for="hostel_no" class="form-label-premium">Hostel Number <span class="text-rose-500">*</span></label>
                                 <input type="number" name="hostel_no" id="hostel_no" class="form-input-premium" value="{{ old('hostel_no', $student->hostel_no) }}" required>
                                 @error('hostel_no') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                             </div>
 
                             <div>
-                                <label for="dno" class="form-label-premium">D.No</label>
-                                <input type="text" name="dno" id="dno" class="form-input-premium" value="{{ old('dno', $student->dno) }}">
+                                <label for="dno" class="form-label-premium">D.No <span class="text-rose-500">*</span></label>
+                                <input type="text" name="dno" id="dno" class="form-input-premium" value="{{ old('dno', $student->dno) }}" required>
                                 @error('dno') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label for="batch_id" class="form-label-premium">Batch</label>
-                                <select name="batch_id" id="batch_id" class="form-input-premium appearance-none">
+                                <label for="batch_id" class="form-label-premium">Batch <span class="text-rose-500">*</span></label>
+                                <select name="batch_id" id="batch_id" class="form-input-premium appearance-none" required>
                                     <option value="">Select Batch</option>
                                     @foreach($batches as $batch)
                                         <option value="{{ $batch->id }}" {{ old('batch_id', $student->batch_id) == $batch->id ? 'selected' : '' }}>{{ $batch->batch_name }}</option>
@@ -90,9 +90,9 @@
                     
                     <div class="space-y-6">
                         <div>
-                            <label for="room_id" class="form-label-premium">Designated Residential Unit</label>
+                            <label for="room_id" class="form-label-premium">Designated Room <span class="text-rose-500">*</span></label>
                             <div class="relative group">
-                                <select name="room_id" id="room_id" class="form-input-premium appearance-none">
+                                <select name="room_id" id="room_id" class="form-input-premium appearance-none" required>
                                     <option value="">Select Room</option>
                                     @foreach($rooms as $room)
                                         <option value="{{ $room->id }}" {{ old('room_id', $student->room_id) == $room->id ? 'selected' : '' }}>
@@ -115,7 +115,7 @@
                     Discard Changes
                 </a>
                 <button type="submit" class="btn-premium px-12 py-4 shadow-xl shadow-indigo-600/20">
-                    <i class="fas fa-save mr-2 opacity-70"></i> Update Records
+                    <i class="fas fa-save mr-2 opacity-70"></i> Update Hosteller
                 </button>
             </div>
         </form>
