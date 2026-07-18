@@ -22,7 +22,7 @@
                     <th>Dates</th>
                     <th>Reason</th>
                     <th>Status</th>
-                    <th class="text-right">Operations</th>
+                    <th class="text-right">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,7 +30,7 @@
                 <tr class="group">
                     <td>
                         <div class="font-bold text-slate-800 tracking-tight">
-                            {{ $leave->hosteller ? $leave->hosteller->student_name : 'Unknown Hosteller' }}
+                            {{ $leave->hosteller ? $leave->hosteller->student_name . ' (H.No. ' . $leave->hosteller->hostel_no . ')' : 'Unknown Hosteller' }}
                         </div>
                     </td>
                     <td>
@@ -52,7 +52,7 @@
                         @endif
                     </td>
                     <td class="text-right">
-                        <div class="flex justify-end space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div class="flex justify-end space-x-1 transition-opacity">
                             <a href="{{ route('leaves.edit', $leave) }}" class="p-2 text-slate-400 hover:text-indigo-600 transition-colors">
                                 <i class="fas fa-edit"></i>
                             </a>

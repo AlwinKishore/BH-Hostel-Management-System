@@ -21,7 +21,7 @@
                     <th>Hosteller</th>
                     <th>Date Logged</th>
                     <th>Remark / Note</th>
-                    <th class="text-right">Operations</th>
+                    <th class="text-right">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,7 +29,7 @@
                 <tr class="group">
                     <td>
                         <div class="font-bold text-slate-800 tracking-tight">
-                            {{ $remark->hosteller ? $remark->hosteller->student_name : 'Unknown Hosteller' }}
+                            {{ $remark->hosteller ? $remark->hosteller->student_name . ' (H.No. ' . $remark->hosteller->hostel_no . ')' : 'Unknown Hosteller' }}
                         </div>
                     </td>
                     <td>
@@ -41,7 +41,7 @@
                         <div class="text-sm text-slate-600 truncate max-w-sm">{{ $remark->remarks }}</div>
                     </td>
                     <td class="text-right">
-                        <div class="flex justify-end space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div class="flex justify-end space-x-1 transition-opacity">
                             <a href="{{ route('remarks.edit', $remark) }}" class="p-2 text-slate-400 hover:text-indigo-600 transition-colors">
                                 <i class="fas fa-edit"></i>
                             </a>

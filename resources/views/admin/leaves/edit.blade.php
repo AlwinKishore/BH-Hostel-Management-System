@@ -24,12 +24,12 @@
             
             <div class="space-y-6">
                 <div>
-                    <label for="hosteller_id" class="form-label-premium">Hosteller</label>
+                    <label for="hosteller_id" class="form-label-premium">Hosteller <span class="text-rose-500">*</span></label>
                     <select name="hosteller_id" id="hosteller_id" class="form-input-premium" required>
                         <option value="">Select Hosteller</option>
                         @foreach($hostellers as $hosteller)
                             <option value="{{ $hosteller->id }}" {{ old('hosteller_id', $leave->hosteller_id) == $hosteller->id ? 'selected' : '' }}>
-                                {{ $hosteller->student_name }} (Hostel {{ $hosteller->hostel_no }})
+                                {{ $hosteller->student_name }} (H.No. {{ $hosteller->hostel_no }})
                             </option>
                         @endforeach
                     </select>
@@ -38,20 +38,31 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label for="start_date" class="form-label-premium">Start Date</label>
+                        <label for="start_date" class="form-label-premium">Room No</label>
+                        <input type="text" name="start_date" id="start_date" class="form-input-premium" value="{{ $hosteller->room->room_no }}" disabled>
+                    </div>
+                    <div>
+                        <label for="end_date" class="form-label-premium">Department No</label>
+                        <input type="text" name="end_date" id="end_date" class="form-input-premium" value="{{ $hosteller->dno }}" disabled>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="start_date" class="form-label-premium">Start Date <span class="text-rose-500">*</span></label>
                         <input type="date" name="start_date" id="start_date" class="form-input-premium" value="{{ old('start_date', $leave->start_date) }}" required>
                         @error('start_date') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                     </div>
                     <div>
-                        <label for="end_date" class="form-label-premium">End Date</label>
+                        <label for="end_date" class="form-label-premium">End Date <span class="text-rose-500">*</span></label>
                         <input type="date" name="end_date" id="end_date" class="form-input-premium" value="{{ old('end_date', $leave->end_date) }}" required>
                         @error('end_date') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                     </div>
                 </div>
 
                 <div>
-                    <label for="reason" class="form-label-premium">Reason (Optional)</label>
-                    <textarea name="reason" id="reason" rows="3" class="form-input-premium" placeholder="Enter reason for leave...">{{ old('reason', $leave->reason) }}</textarea>
+                    <label for="reason" class="form-label-premium">Reason <span class="text-rose-500">*</span></label>
+                    <textarea name="reason" id="reason" rows="3" class="form-input-premium" required>{{ old('reason', $leave->reason) }}</textarea>
                     @error('reason') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                 </div>
 
@@ -63,7 +74,7 @@
 
             <div class="flex items-center justify-end space-x-6 pt-10 border-t border-slate-100">
                 <a href="{{ route('leaves.index') }}" class="text-xs font-black uppercase tracking-widest text-slate-500 hover:text-slate-800 transition-colors">
-                    Cancel Operation
+                    Cancel
                 </a>
                 <button type="submit" class="btn-premium px-10 py-4">
                     <i class="fas fa-save mr-2 opacity-70"></i> Update Leave

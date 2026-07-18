@@ -24,7 +24,7 @@
             
             <div class="space-y-6">
                 <div>
-                    <label for="hosteller_id" class="form-label-premium">Hosteller</label>
+                    <label for="hosteller_id" class="form-label-premium">Hosteller <span class="text-rose-500">*</span></label>
                     <select name="hosteller_id" id="hosteller_id" class="form-input-premium" required>
                         <option value="">Select Hosteller</option>
                         @foreach($hostellers as $hosteller)
@@ -36,16 +36,27 @@
                     @error('hosteller_id') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                 </div>
 
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="start_date" class="form-label-premium">Room No</label>
+                        <input type="text" name="start_date" id="start_date" class="form-input-premium" value="{{ $hosteller->room->room_no }}" disabled>
+                    </div>
+                    <div>
+                        <label for="end_date" class="form-label-premium">Department No</label>
+                        <input type="text" name="end_date" id="end_date" class="form-input-premium" value="{{ $hosteller->dno }}" disabled>
+                    </div>
+                </div>
+
                 <div>
-                    <label for="remarks" class="form-label-premium">Remark Details</label>
-                    <textarea name="remarks" id="remarks" rows="5" class="form-input-premium" placeholder="Enter full details of the remark..." required>{{ old('remarks', $remark->remarks) }}</textarea>
+                    <label for="remarks" class="form-label-premium">Remark Details <span class="text-rose-500">*</span></label>
+                    <textarea name="remarks" id="remarks" rows="5" class="form-input-premium" required>{{ old('remarks', $remark->remarks) }}</textarea>
                     @error('remarks') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                 </div>
             </div>
 
             <div class="flex items-center justify-end space-x-6 pt-10 border-t border-slate-100">
                 <a href="{{ route('remarks.index') }}" class="text-xs font-black uppercase tracking-widest text-slate-500 hover:text-slate-800 transition-colors">
-                    Cancel Operation
+                    Cancel
                 </a>
                 <button type="submit" class="btn-premium px-10 py-4">
                     <i class="fas fa-save mr-2 opacity-70"></i> Update Remark
