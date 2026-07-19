@@ -7,7 +7,7 @@
     <div class="flex items-center space-x-2 text-slate-500 mb-6 font-bold text-[10px] uppercase tracking-widest">
         <a href="{{ route('dashboard') }}" class="hover:text-indigo-600 transition-colors">Portal</a>
         <span>/</span>
-        <a href="{{ route('batches.index') }}" class="hover:text-indigo-600 transition-colors">Batchs</a>
+        <a href="{{ route('batches.index') }}" class="hover:text-indigo-600 transition-colors">Batches</a>
         <span>/</span>
         <span class="text-slate-800">Edit Batch</span>
     </div>

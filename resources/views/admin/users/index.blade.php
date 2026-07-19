@@ -46,7 +46,7 @@
                     <td>
                         @if($user->is_active)
                             <span class="px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200">
-                                Active Session
+                                Active
                             </span>
                         @else
                             <span class="px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-full bg-rose-100 text-rose-700 border border-rose-200">

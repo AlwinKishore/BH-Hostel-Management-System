@@ -34,9 +34,9 @@ class AcademicYearController extends Controller
         $exactOneYear = $startDate->copy()->addYear()->format('Y-m-d');
         $oneYearMinusDay = $startDate->copy()->addYear()->subDay()->format('Y-m-d');
         
-        if (!in_array($endDate->format('Y-m-d'), [$exactOneYear, $oneYearMinusDay])) {
-            return back()->withErrors(['end_date' => 'The academic year duration must be exactly 1 year (e.g. 2025-06-19 to 2026-06-18).'])->withInput();
-        }
+        // if (!in_array($endDate->format('Y-m-d'), [$exactOneYear, $oneYearMinusDay])) {
+        //     return back()->withErrors(['end_date' => 'The academic year duration must be exactly 1 year (e.g. 2025-06-19 to 2026-06-18).'])->withInput();
+        // }
 
         $overlapping = AcademicYear::where(function ($query) use ($validated) {
             $query->whereBetween('start_date', [$validated['start_date'], $validated['end_date']])
@@ -83,9 +83,9 @@ class AcademicYearController extends Controller
         $exactOneYear = $startDate->copy()->addYear()->format('Y-m-d');
         $oneYearMinusDay = $startDate->copy()->addYear()->subDay()->format('Y-m-d');
         
-        if (!in_array($endDate->format('Y-m-d'), [$exactOneYear, $oneYearMinusDay])) {
-            return back()->withErrors(['end_date' => 'The academic year duration must be exactly 1 year (e.g. 2025-06-19 to 2026-06-18).'])->withInput();
-        }
+        // if (!in_array($endDate->format('Y-m-d'), [$exactOneYear, $oneYearMinusDay])) {
+        //     return back()->withErrors(['end_date' => 'The academic year duration must be exactly 1 year (e.g. 2025-06-19 to 2026-06-18).'])->withInput();
+        // }
 
         $overlapping = AcademicYear::where('id', '!=', $academicYear->id)->where(function ($query) use ($validated) {
             $query->whereBetween('start_date', [$validated['start_date'], $validated['end_date']])

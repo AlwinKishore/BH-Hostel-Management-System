@@ -18,8 +18,8 @@ class HostellerController extends Controller
         $rooms = \App\Models\Room::with(['hostellers.batch'])->withCount('hostellers')->where('is_available', true)->get()->filter(function($room) {
             return $room->hostellers_count < $room->accommodation;
         })->values();
-        $academicYears = \App\Models\AcademicYear::all();
-        $batches = \App\Models\Batch::all();
+        $academicYears = \App\Models\AcademicYear::where('is_current', true)->get();
+        $batches = \App\Models\Batch::where('is_active', true)->get();
         return view('admin.students.create', compact('rooms', 'academicYears', 'batches'));
     }
 
@@ -45,8 +45,8 @@ class HostellerController extends Controller
         $rooms = \App\Models\Room::with(['hostellers.batch'])->withCount('hostellers')->where('is_available', true)->get()->filter(function($room) use ($student) {
             return $room->hostellers_count < $room->accommodation || $room->id == $student->room_id;
         })->values();
-        $academicYears = \App\Models\AcademicYear::all();
-        $batches = \App\Models\Batch::all();
+        $academicYears = \App\Models\AcademicYear::where('is_current', true)->get();
+        $batches = \App\Models\Batch::where('is_active', true)->get();
         return view('admin.students.edit', ['student' => $student, 'rooms' => $rooms, 'academicYears' => $academicYears, 'batches' => $batches]);
     }
 

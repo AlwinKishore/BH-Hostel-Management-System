@@ -60,7 +60,7 @@
                     </div>
                     <div>
                         <h5 class="font-bold text-slate-800 group-hover:text-white transition-colors">Room {{ $room->room_no }}</h5>
-                        <div class="text-xs text-slate-500 group-hover:text-slate-400 font-medium">Category: {{ $room->category ? $room->category->name : 'N/A' }}</div>
+                        <div class="text-xs text-slate-500 group-hover:text-slate-400 font-medium">Category: {{ $room->category ? $room->category->category_name : 'N/A' }}</div>
                         <div class="text-[10px] uppercase font-black tracking-widest text-sky-600 group-hover:text-sky-400 mt-2">Manage Room &rarr;</div>
                     </div>
                 </div>

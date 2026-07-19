@@ -24,7 +24,7 @@
             <div class="space-y-6">
                 <div>
                     <label for="name" class="form-label-premium">Academic Year Name <span class="text-red-500">*</span></label>
-                    <input type="text" name="name" id="name" class="form-input-premium" placeholder="e.g. Academic Year 2026-2028" value="{{ old('name') }}" required>
+                    <input type="text" name="name" id="name" class="form-input-premium" value="{{ old('name') }}" required>
                     @error('name') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                 </div>
 

@@ -79,5 +79,57 @@
             </div>
         </form>
     </div>
+
+    @if($room->is_available)
+
+    <div class="glass-card p-10 border-none shadow-2xl shadow-slate-200/60 mt-10">
+        <div class="mb-5">
+            <h3 class="text-2xl font-black text-slate-800 tracking-tight">Assigned Hostellers</h3>
+            <p class="text-sm text-slate-600 font-medium">List of students assigned to this room</p>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="modern-table">
+                <thead>
+                    <tr>
+                        <th>Hosteller Name</th>
+                        <th>H.No.</th>
+                        <th>D.No.</th>
+                        <th>Academic Year</th>
+                        <th>Batch</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($room->hostellers as $student)
+                    <tr class="group">
+                        <td>
+                            <div class="text-sm font-medium text-slate-600">{{ $student->student_name ?? '-' }}</div>
+                        </td>
+                        <td>
+                            <div class="text-sm font-medium text-slate-600">{{ $student->hostel_no ?? '-' }}</div>
+                        </td>
+                        <td>
+                            <div class="text-sm font-medium text-slate-600">{{ $student->dno ?? '-' }}</div>
+                        </td>
+                        <td>
+                            <div class="text-sm font-black text-slate-700">{{ $student->academicYear->name ?? 'N/A' }}</div>
+                        </td>
+                        <td>
+                            <div class="text-sm font-black text-slate-700">{{ $student->batch->batch_name ?? '-' }}</div>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="5" class="text-center py-20 italic font-bold text-slate-400">
+                            No hostellers found.
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @endif
+
 </div>
 @endsection

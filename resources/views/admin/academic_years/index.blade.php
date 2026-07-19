@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('header', 'Academic Yeares')
+@section('header', 'Academic Years')
 
 @section('content')
 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10">

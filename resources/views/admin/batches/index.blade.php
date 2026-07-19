@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
-@section('header', 'Batchs')
+@section('header', 'Batches')
 
 @section('content')
 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10">
     <div>
-        <h3 class="text-3xl font-black text-slate-800 tracking-tight">Batchs</h3>
-        <p class="text-sm text-slate-600 font-medium">Manage Batchs calendar years</p>
+        <h3 class="text-3xl font-black text-slate-800 tracking-tight">Batches</h3>
+        <p class="text-sm text-slate-600 font-medium">Manage Batches calendar years</p>
     </div>
     <a href="{{ route('batches.create') }}" class="btn-premium">
         <i class="fas fa-plus mr-2 opacity-70"></i> Create New Batch
