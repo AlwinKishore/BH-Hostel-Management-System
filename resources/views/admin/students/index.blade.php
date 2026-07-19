@@ -13,6 +13,40 @@
     </a>
 </div>
 
+<div class="glass-card p-6 mb-8 border-none shadow-xl shadow-slate-200/50">
+    <form action="{{ route('students.index') }}" method="GET" class="flex flex-wrap items-end gap-6">
+        <div class="flex-1 min-w-[200px]">
+            <label for="search" class="form-label-premium">Search Students</label>
+            <div class="relative group">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500 group-focus-within:text-indigo-500 transition-colors">
+                    <i class="fas fa-search text-sm"></i>
+                </div>
+                <input type="text" name="search" id="search" value="{{ request('search') }}" class="form-input-premium !pl-11" placeholder="Name, Hostel No, or D.No">
+            </div>
+        </div>
+        
+        <div class="w-full md:w-64">
+            <label for="academic_year_id" class="form-label-premium">Academic Year</label>
+            <select name="academic_year_id" id="academic_year_id" class="form-input-premium">
+                <option value="">All Academic Years</option>
+                @foreach($academicYears as $year)
+                    <option value="{{ $year->id }}" {{ request('academic_year_id') == $year->id ? 'selected' : '' }}>{{ $year->name }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <button type="submit" class="btn-premium px-8 py-3.5">
+            <i class="fas fa-filter mr-2 opacity-70"></i> Filter
+        </button>
+        
+        @if(request()->hasAny(['search', 'academic_year_id']))
+        <a href="{{ route('students.index') }}" class="text-xs font-black uppercase tracking-widest text-slate-500 hover:text-rose-500 transition-colors px-2">
+            Clear
+        </a>
+        @endif
+    </form>
+</div>
+
 <div class="glass-card overflow-hidden border-none shadow-xl shadow-slate-200/50">
     <div class="overflow-x-auto">
         <table class="modern-table">

@@ -7,10 +7,27 @@ use Illuminate\Http\Request;
 
 class HostellerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $students = Hosteller::latest()->paginate(10);
-        return view('admin.students.index', compact('students'));
+        $query = Hosteller::query();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('student_name', 'like', "%{$search}%")
+                  ->orWhere('hostel_no', 'like', "%{$search}%")
+                  ->orWhere('dno', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('academic_year_id')) {
+            $query->where('academic_year_id', $request->academic_year_id);
+        }
+
+        $students = $query->latest()->paginate(10)->withQueryString();
+        $academicYears = \App\Models\AcademicYear::all();
+        
+        return view('admin.students.index', compact('students', 'academicYears'));
     }
 
     public function create()

@@ -23,27 +23,21 @@
             @method('PUT')
             
             <div class="space-y-6">
+                <input type="hidden" name="hosteller_id" value="{{ $remark->hosteller_id }}">
+                
                 <div>
-                    <label for="hosteller_id" class="form-label-premium">Hosteller <span class="text-rose-500">*</span></label>
-                    <select name="hosteller_id" id="hosteller_id" class="form-input-premium" required>
-                        <option value="">Select Hosteller</option>
-                        @foreach($hostellers as $hosteller)
-                            <option value="{{ $hosteller->id }}" {{ old('hosteller_id', $remark->hosteller_id) == $hosteller->id ? 'selected' : '' }}>
-                                {{ $hosteller->student_name }} (Hostel {{ $hosteller->hostel_no }})
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('hosteller_id') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
+                    <label class="form-label-premium">Hosteller Name</label>
+                    <input type="text" class="form-input-premium bg-slate-50 text-slate-500 cursor-not-allowed" value="{{ $remark->hosteller->student_name }} (Hostel {{ $remark->hosteller->hostel_no }})" readonly>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label for="start_date" class="form-label-premium">Room No</label>
-                        <input type="text" name="start_date" id="start_date" class="form-input-premium" value="{{ $hosteller->room->room_no }}" disabled>
+                        <label class="form-label-premium">Room No</label>
+                        <input type="text" class="form-input-premium bg-slate-50 text-slate-500 cursor-not-allowed" value="{{ $remark->hosteller->room->room_no ?? 'N/A' }}" readonly>
                     </div>
                     <div>
-                        <label for="end_date" class="form-label-premium">Department No</label>
-                        <input type="text" name="end_date" id="end_date" class="form-input-premium" value="{{ $hosteller->dno }}" disabled>
+                        <label class="form-label-premium">Department No</label>
+                        <input type="text" class="form-input-premium bg-slate-50 text-slate-500 cursor-not-allowed" value="{{ $remark->hosteller->dno ?? 'N/A' }}" readonly>
                     </div>
                 </div>
 

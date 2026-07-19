@@ -22,9 +22,25 @@
             </div>
         </div>
 
+        <div class="w-full md:w-64">
+            <label for="batch_id" class="form-label-premium">Filter by Batch</label>
+            <select name="batch_id" id="batch_id" class="form-input-premium">
+                <option value="">All Batches</option>
+                @foreach($batches as $batch)
+                    <option value="{{ $batch->id }}" {{ request('batch_id') == $batch->id ? 'selected' : '' }}>{{ $batch->batch_name }}</option>
+                @endforeach
+            </select>
+        </div>
+
         <button type="submit" class="btn-premium px-8 py-3.5">
             <i class="fas fa-bolt mr-2 opacity-70"></i> Load Roster
         </button>
+        
+        @if(request()->hasAny(['batch_id']))
+        <a href="{{ route('attendance.index', ['date' => $date]) }}" class="text-xs font-black uppercase tracking-widest text-slate-500 hover:text-rose-500 transition-colors px-2">
+            Clear
+        </a>
+        @endif
     </form>
 </div>
 

@@ -13,6 +13,49 @@
     </a>
 </div>
 
+<div class="glass-card p-6 mb-8 border-none shadow-xl shadow-slate-200/50">
+    <form action="{{ route('rooms.index') }}" method="GET" class="flex flex-wrap items-end gap-6">
+        <div class="flex-1 min-w-[200px]">
+            <label for="search" class="form-label-premium">Search Rooms</label>
+            <div class="relative group">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500 group-focus-within:text-indigo-500 transition-colors">
+                    <i class="fas fa-search text-sm"></i>
+                </div>
+                <input type="text" name="search" id="search" value="{{ request('search') }}" class="form-input-premium !pl-11" placeholder="Room No">
+            </div>
+        </div>
+        
+        <div class="w-full md:w-48">
+            <label for="category_id" class="form-label-premium">Category</label>
+            <select name="category_id" id="category_id" class="form-input-premium">
+                <option value="">All Categories</option>
+                @foreach($categories as $cat)
+                    <option value="{{ $cat->id }}" {{ request('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->category_name }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="w-full md:w-48">
+            <label for="availability" class="form-label-premium">Status</label>
+            <select name="availability" id="availability" class="form-input-premium">
+                <option value="">All Statuses</option>
+                <option value="available" {{ request('availability') == 'available' ? 'selected' : '' }}>Available</option>
+                <option value="full" {{ request('availability') == 'full' ? 'selected' : '' }}>Full</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn-premium px-8 py-3.5">
+            <i class="fas fa-filter mr-2 opacity-70"></i> Filter
+        </button>
+        
+        @if(request()->hasAny(['search', 'category_id', 'availability']))
+        <a href="{{ route('rooms.index') }}" class="text-xs font-black uppercase tracking-widest text-slate-500 hover:text-rose-500 transition-colors px-2">
+            Clear
+        </a>
+        @endif
+    </form>
+</div>
+
 <div class="glass-card overflow-hidden border-none shadow-xl shadow-slate-200/50">
     <div class="overflow-x-auto">
         <table class="modern-table">

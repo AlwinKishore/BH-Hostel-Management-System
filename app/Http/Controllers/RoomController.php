@@ -8,10 +8,30 @@ use Illuminate\Http\Request;
 
 class RoomController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $rooms = Room::with('category')->withCount('hostellers')->latest()->paginate(10);
-        return view('admin.rooms.index', compact('rooms'));
+        $query = Room::with('category')->withCount('hostellers');
+
+        if ($request->filled('search')) {
+            $query->where('room_no', 'like', "%{$request->search}%");
+        }
+
+        if ($request->filled('category_id')) {
+            $query->where('room_category', $request->category_id);
+        }
+
+        if ($request->filled('availability')) {
+            if ($request->availability === 'available') {
+                $query->where('is_available', true)->where('is_full', false);
+            } elseif ($request->availability === 'full') {
+                $query->where('is_full', true);
+            }
+        }
+
+        $rooms = $query->latest()->paginate(10)->withQueryString();
+        $categories = Category::all();
+        
+        return view('admin.rooms.index', compact('rooms', 'categories'));
     }
 
     public function create()

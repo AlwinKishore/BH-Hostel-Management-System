@@ -43,19 +43,33 @@
                         <div class="text-sm text-slate-600 truncate max-w-xs">{{ $leave->reason }}</div>
                     </td>
                     <td>
-                        @if($leave->is_approved === 1)
-                            <span class="px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-full bg-emerald-100 text-emerald-700">Approved</span>
-                        @elseif($leave->is_approved === 0)
-                            <span class="px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-full bg-rose-100 text-rose-700">Rejected</span>
-                        @else
-                            <span class="px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-full bg-amber-100 text-amber-700">Pending</span>
+                        @if($leave->status === 'pending')
+                            <form action="{{ route('leaves.updateStatus', $leave) }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <select name="status" onchange="this.form.submit()" class="form-input-premium py-1.5 px-3 text-[10px] uppercase font-black tracking-widest rounded-full cursor-pointer transition-colors shadow-sm bg-amber-50 text-amber-700 border-amber-200 focus:border-amber-500">
+                                    <option value="pending" selected>Pending</option>
+                                    <option value="approved">Approved</option>
+                                    <option value="rejected">Rejected</option>
+                                </select>
+                            </form>
+                        @elseif($leave->status === 'approved')
+                            <span class="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-sm cursor-not-allowed">
+                                <i class="fas fa-check mr-1"></i> Approved
+                            </span>
+                        @elseif($leave->status === 'rejected')
+                            <span class="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-full bg-rose-50 text-rose-700 border border-rose-200 shadow-sm cursor-not-allowed">
+                                <i class="fas fa-times mr-1"></i> Rejected
+                            </span>
                         @endif
                     </td>
                     <td class="text-right">
                         <div class="flex justify-end space-x-1 transition-opacity">
-                            <a href="{{ route('leaves.edit', $leave) }}" class="p-2 text-slate-400 hover:text-indigo-600 transition-colors">
-                                <i class="fas fa-edit"></i>
-                            </a>
+                            @if($leave->status === 'pending')
+                                <a href="{{ route('leaves.edit', $leave) }}" class="p-2 text-slate-400 hover:text-indigo-600 transition-colors">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            @endif
                             <form action="{{ route('leaves.destroy', $leave) }}" method="POST" class="inline-block">
                                 @csrf
                                 @method('DELETE')

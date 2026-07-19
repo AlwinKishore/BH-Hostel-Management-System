@@ -19,6 +19,10 @@ class AttendanceController extends Controller
             $q->where('attendance_date', $date);
         }, 'academicYear', 'batch', 'room']);
 
+        if ($request->filled('batch_id')) {
+            $query->where('batch_id', $request->batch_id);
+        }
+
         $students = $query->get();
         
         $groupedStudents = $students->sortBy(function($student) {
@@ -29,7 +33,9 @@ class AttendanceController extends Controller
             return $year . ' — ' . $batch;
         });
 
-        return view('admin.attendance.index', compact('groupedStudents', 'date'));
+        $batches = \App\Models\Batch::all();
+
+        return view('admin.attendance.index', compact('groupedStudents', 'date', 'batches'));
     }
 
     /**

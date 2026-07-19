@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('students', HostellerController::class);
  
     // Operations
+    Route::patch('leaves/{leaf}/status', [LeaveController::class, 'updateStatus'])->name('leaves.updateStatus');
     Route::resource('leaves', LeaveController::class);
     Route::resource('attendance', AttendanceController::class);
     Route::resource('remarks', RemarkController::class);

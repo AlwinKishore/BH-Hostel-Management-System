@@ -23,27 +23,21 @@
             @method('PUT')
             
             <div class="space-y-6">
+                <input type="hidden" name="hosteller_id" value="{{ $leave->hosteller_id }}">
+                
                 <div>
-                    <label for="hosteller_id" class="form-label-premium">Hosteller <span class="text-rose-500">*</span></label>
-                    <select name="hosteller_id" id="hosteller_id" class="form-input-premium" required>
-                        <option value="">Select Hosteller</option>
-                        @foreach($hostellers as $hosteller)
-                            <option value="{{ $hosteller->id }}" {{ old('hosteller_id', $leave->hosteller_id) == $hosteller->id ? 'selected' : '' }}>
-                                {{ $hosteller->student_name }} (H.No. {{ $hosteller->hostel_no }})
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('hosteller_id') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
+                    <label class="form-label-premium">Hosteller Name</label>
+                    <input type="text" class="form-input-premium bg-slate-50 text-slate-500 cursor-not-allowed" value="{{ $leave->hosteller->student_name }} (Hostel {{ $leave->hosteller->hostel_no }})" readonly>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label for="start_date" class="form-label-premium">Room No</label>
-                        <input type="text" name="start_date" id="start_date" class="form-input-premium" value="{{ $hosteller->room->room_no }}" disabled>
+                        <label class="form-label-premium">Room No</label>
+                        <input type="text" class="form-input-premium bg-slate-50 text-slate-500 cursor-not-allowed" value="{{ $leave->hosteller->room->room_no ?? 'N/A' }}" readonly>
                     </div>
                     <div>
-                        <label for="end_date" class="form-label-premium">Department No</label>
-                        <input type="text" name="end_date" id="end_date" class="form-input-premium" value="{{ $hosteller->dno }}" disabled>
+                        <label class="form-label-premium">Department No</label>
+                        <input type="text" class="form-input-premium bg-slate-50 text-slate-500 cursor-not-allowed" value="{{ $leave->hosteller->dno ?? 'N/A' }}" readonly>
                     </div>
                 </div>
 
@@ -64,11 +58,6 @@
                     <label for="reason" class="form-label-premium">Reason <span class="text-rose-500">*</span></label>
                     <textarea name="reason" id="reason" rows="3" class="form-input-premium" required>{{ old('reason', $leave->reason) }}</textarea>
                     @error('reason') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
-                </div>
-
-                <div class="flex items-center mt-4">
-                    <input type="checkbox" value="1" name="is_approved" id="is_approved" class="w-5 h-5 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500" {{ old('is_approved', $leave->is_approved) ? 'checked' : '' }}>
-                    <label for="is_approved" class="ml-3 text-sm font-bold text-slate-700">Approve Leave</label>
                 </div>
             </div>
 
