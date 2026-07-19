@@ -16,7 +16,7 @@ class DashboardController extends Controller
             'total_students' => Hosteller::count(),
             'total_rooms' => Room::count(),
             'vacant_rooms' => Room::where('is_available', true)->count(),
-            'leaves_pending' => Leave::where('is_approved', false)->count(),
+            'leaves_pending' => Leave::where('status', 'pending')->count(),
             'todays_attendance' => Attendance::whereDate('attendance_date', today())->count(),
             'active_batches' => Batch::where('is_active', true)->count(),
         ];

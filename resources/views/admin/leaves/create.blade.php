@@ -53,11 +53,6 @@
                     <textarea name="reason" id="reason" rows="3" class="form-input-premium" required>{{ old('reason') }}</textarea>
                     @error('reason') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                 </div>
-
-                <div class="flex items-center mt-4">
-                    <input type="checkbox" value="1" name="is_approved" id="is_approved" class="w-5 h-5 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                    <label for="is_approved" class="ml-3 text-sm font-bold text-slate-700">Approve Leave</label>
-                </div>
             </div>
 
             <div class="flex items-center justify-end space-x-6 pt-10 border-t border-slate-100">
