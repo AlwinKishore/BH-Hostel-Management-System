@@ -54,25 +54,25 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
+                                <label for="academic_year_id" class="form-label-premium">Academic Year <span class="text-rose-500">*</span></label>
+                                <select name="academic_year_id" id="academic_year_id" class="form-input-premium appearance-none" required>
+                                    <option value="">Select Academic Year</option>
+                                    @foreach($academicYears as $academicYear)
+                                        <option value="{{ $academicYear->id }}" {{ old('academic_year_id') == $academicYear->id ? 'selected' : '' }}>{{ $academicYear->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('academic_year_id') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
+                            </div>
+                            
+                            <div>
                                 <label for="batch_id" class="form-label-premium">Batch <span class="text-rose-500">*</span></label>
                                 <select name="batch_id" id="batch_id" class="form-input-premium appearance-none" required>
                                     <option value="">Select Batch</option>
                                     @foreach($batches as $batch)
-                                        <option value="{{ $batch->id }}" {{ old('batch_id') == $batch->id ? 'selected' : '' }}>{{ $batch->batch_name }}</option>
+                                        <option value="{{ $batch->id }}" data-academic-year-id="{{ $batch->academic_year_id }}" {{ old('batch_id') == $batch->id ? 'selected' : '' }}>{{ $batch->batch_name }}</option>
                                     @endforeach
                                 </select>
                                 @error('batch_id') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
-                            </div>
-                            
-                            <div>
-                                <label for="year_id" class="form-label-premium">Academic Year <span class="text-rose-500">*</span></label>
-                                <select name="year_id" id="year_id" class="form-input-premium appearance-none" required>
-                                    <option value="">Select Year</option>
-                                    @foreach($years as $year)
-                                        <option value="{{ $year->id }}" {{ old('year_id') == $year->id ? 'selected' : '' }}>{{ $year->year_name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('year_id') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                             </div>
                         </div>
                     </div>
@@ -105,6 +105,12 @@
                             </div>
                             @error('room_id') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
                         </div>
+
+                        <!-- Dynamic Room Details Container -->
+                        <div id="room-details-container" class="hidden mt-6 p-5 bg-slate-50 border border-slate-200 rounded-2xl shadow-inner">
+                            <div id="room-capacity-info" class="text-sm mb-4"></div>
+                            <div id="room-hostellers-list" class="space-y-3"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -120,4 +126,111 @@
         </form>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const academicYearSelect = document.getElementById('academic_year_id');
+        const batchSelect = document.getElementById('batch_id');
+        
+        // Clone all original options (except the first placeholder)
+        const allBatchOptions = Array.from(batchSelect.options).slice(1).map(opt => opt.cloneNode(true));
+        const placeholderOption = batchSelect.options[0].cloneNode(true);
+
+        function filterBatches() {
+            const selectedYearId = academicYearSelect.value;
+            const currentSelection = batchSelect.value;
+            
+            // Clear current options
+            batchSelect.innerHTML = '';
+            batchSelect.appendChild(placeholderOption);
+
+            let hasValidSelection = false;
+
+            allBatchOptions.forEach(option => {
+                if (!selectedYearId || option.getAttribute('data-academic-year-id') === selectedYearId) {
+                    batchSelect.appendChild(option.cloneNode(true));
+                    if (option.value === currentSelection) {
+                        hasValidSelection = true;
+                    }
+                }
+            });
+
+            if (hasValidSelection) {
+                batchSelect.value = currentSelection;
+            } else {
+                batchSelect.value = '';
+            }
+        }
+
+        academicYearSelect.addEventListener('change', filterBatches);
+        // Initial filter on load
+        filterBatches();
+
+        // Dynamic Room Details Logic
+        const roomSelect = document.getElementById('room_id');
+        const roomDetailsContainer = document.getElementById('room-details-container');
+        const roomCapacityInfo = document.getElementById('room-capacity-info');
+        const roomHostellersList = document.getElementById('room-hostellers-list');
+        
+        const roomsData = @json($rooms);
+
+        function updateRoomDetails() {
+            const selectedRoomId = parseInt(roomSelect.value);
+            if (!selectedRoomId) {
+                roomDetailsContainer.classList.add('hidden');
+                return;
+            }
+
+            const room = roomsData.find(r => r.id === selectedRoomId);
+            if (!room) {
+                roomDetailsContainer.classList.add('hidden');
+                return;
+            }
+
+            roomDetailsContainer.classList.remove('hidden');
+            
+            const available = Math.max(0, room.accommodation - room.hostellers_count);
+            const filled = room.hostellers_count;
+            
+            roomCapacityInfo.innerHTML = `
+                <div class="flex items-center space-x-4">
+                    <div class="px-3 py-1 bg-white rounded-lg shadow-sm border border-slate-100">
+                        <span class="text-emerald-600 font-black">${available} Available</span>
+                    </div>
+                    <div class="px-3 py-1 bg-white rounded-lg shadow-sm border border-slate-100">
+                        <span class="text-amber-600 font-black">${filled} Filled</span>
+                    </div>
+                </div>
+            `;
+
+            if (filled > 0 && room.hostellers && room.hostellers.length > 0) {
+                let hostellersHtml = '<h5 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 mt-4">Current Occupants</h5>';
+                room.hostellers.forEach(occupant => {
+                    hostellersHtml += `
+                        <div class="flex items-center p-3 bg-white border border-slate-100 rounded-xl shadow-sm">
+                            <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold mr-3">
+                                <i class="fas fa-user text-xs"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="text-xs font-bold text-slate-800">${occupant.student_name}</div>
+                                <div class="text-[10px] font-medium text-slate-500">D.No: ${occupant.dno || 'N/A'} | Hostel: ${occupant.hostel_no}</div>
+                            </div>
+                            <div class="text-[9px] uppercase font-black tracking-widest text-indigo-500 bg-indigo-50 px-2 py-1 rounded-md">
+                                ${occupant.batch ? occupant.batch.batch_name : 'No Batch'}
+                            </div>
+                        </div>
+                    `;
+                });
+                roomHostellersList.innerHTML = hostellersHtml;
+            } else {
+                roomHostellersList.innerHTML = '<div class="text-xs italic text-slate-400 mt-2">This room is currently empty.</div>';
+            }
+        }
+
+        roomSelect.addEventListener('change', updateRoomDetails);
+        updateRoomDetails(); // Run on load in case old value is selected
+    });
+</script>
 @endsection

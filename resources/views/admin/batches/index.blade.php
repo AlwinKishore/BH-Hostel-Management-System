@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
-@section('header', 'Batches')
+@section('header', 'Batchs')
 
 @section('content')
 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10">
     <div>
-        <h3 class="text-3xl font-black text-slate-800 tracking-tight">Academic Batches</h3>
-        <p class="text-sm text-slate-600 font-medium">Manage student batches and academic cycles</p>
+        <h3 class="text-3xl font-black text-slate-800 tracking-tight">Batchs</h3>
+        <p class="text-sm text-slate-600 font-medium">Manage Batchs calendar years</p>
     </div>
     <a href="{{ route('batches.create') }}" class="btn-premium">
         <i class="fas fa-plus mr-2 opacity-70"></i> Create New Batch
@@ -18,9 +18,8 @@
         <table class="modern-table">
             <thead>
                 <tr>
-                    <th>Batch Name</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
+                    <th>Batch Designation</th>
+                    <th>Academic Year</th>
                     <th>Status</th>
                     <th class="text-right">Actions</th>
                 </tr>
@@ -32,15 +31,12 @@
                         <div class="font-bold text-slate-800 tracking-tight">{{ $batch->batch_name }}</div>
                     </td>
                     <td>
-                        <div class="text-sm font-medium text-slate-600">{{ $batch->start_date ? \Carbon\Carbon::parse($batch->start_date)->format('M d, Y') : 'N/A' }}</div>
+                        <span class="text-slate-600">{{ $batch->academicYear ? $batch->academicYear->name : 'N/A' }}</span>
                     </td>
                     <td>
-                        <div class="text-sm font-medium text-slate-600">{{ $batch->end_date ? \Carbon\Carbon::parse($batch->end_date)->format('M d, Y') : 'N/A' }}</div>
-                    </td>
-                    <td>
-                        @if($batch->is_current)
+                        @if($batch->is_active)
                         <span class="px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200">
-                            Current Batch
+                            Active
                         </span>
                         @else
                         <span class="px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-full bg-slate-100 text-slate-500 border border-slate-200">
@@ -49,14 +45,14 @@
                         @endif
                     </td>
                     <td class="text-right">
-                        <div class="flex justify-end space-x-1 transition-opacity"> <!-- opacity-0 group-hover:opacity-100 -->
+                        <div class="flex justify-end space-x-1 transition-opacity">
                             <a href="{{ route('batches.edit', $batch) }}" class="p-2 text-slate-400 hover:text-indigo-600 transition-colors">
                                 <i class="fas fa-edit"></i>
                             </a>
                             <form action="{{ route('batches.destroy', $batch) }}" method="POST" class="inline-block">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="p-2 text-slate-400 hover:text-rose-600 transition-colors" onclick="return confirm('Deleting this batch will also delete all associated academic years. Do you want to proceed?')">
+                                <button type="submit" class="p-2 text-slate-400 hover:text-rose-600 transition-colors" onclick="return confirm('Deleting this academic year will also delete all associated hostellers. Do you want to proceed?')">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </form>
@@ -65,8 +61,8 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" class="text-center py-20 italic font-bold text-slate-400">
-                        No batches found.
+                    <td colspan="4" class="text-center py-20 italic font-bold text-slate-400">
+                        No academic years found.
                     </td>
                 </tr>
                 @endforelse

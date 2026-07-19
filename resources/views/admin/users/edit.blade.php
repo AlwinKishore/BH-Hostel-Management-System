@@ -52,6 +52,25 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
+                    <div>
+                        <label for="academic_year_id" class="form-label-premium">Assigned Academic Year (Optional)</label>
+                        <select name="academic_year_id" id="academic_year_id" class="form-input-premium">
+                            <option value="">-- No Expiration Setup --</option>
+                            @foreach($academic_years as $academic_year)
+                                <option value="{{ $academic_year->id }}" {{ old('academic_year_id', $user->academic_year_id) == $academic_year->id ? 'selected' : '' }}>
+                                    {{ $academic_year->name }} (ends {{ \Carbon\Carbon::parse($academic_year->end_date)->format('M d, Y') }})
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('academic_year_id') <p class="mt-2 text-[10px] font-black uppercase text-rose-500 ml-4 tracking-wider">{{ $message }}</p> @enderror
+                    </div>
+                    <div class="flex items-center pt-8">
+                        <input type="checkbox" value="1" name="is_active" id="is_active" class="w-5 h-5 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500" {{ old('is_active', $user->is_active ?? true) ? 'checked' : '' }}>
+                        <label for="is_active" class="ml-3 text-sm font-bold text-slate-700">Account is Active</label>
+                    </div>
+                </div>
             </div>
 
             <div class="flex items-center justify-end space-x-6 pt-10 border-t border-slate-100">

@@ -4,8 +4,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Batch extends Model
 {
-    protected $fillable = ['batch_name', 'start_date', 'end_date', 'is_current', 'created_by', 'updated_by'];
-    public function years() { return $this->hasMany(Year::class); }
+    protected $fillable = ['academic_year_id', 'batch_name', 'is_active', 'created_by', 'updated_by'];
+    public function academicYear() { return $this->belongsTo(AcademicYear::class); }
     public function hostellers() { return $this->hasMany(Hosteller::class); }
 }
 

@@ -9,30 +9,26 @@ class BatchController extends Controller
 {
     public function index()
     {
-        $batches = Batch::latest()->paginate(10);
+        $batches = Batch::with('academicYear')->latest()->paginate(10);
         return view('admin.batches.index', compact('batches'));
     }
 
     public function create()
     {
-        return view('admin.batches.create');
+        $academic_years = \App\Models\AcademicYear::latest()->get();
+        return view('admin.batches.create', compact('academic_years'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'batch_name' => 'required|string|max:100|unique:batches,batch_name',
-            'start_date' => 'nullable|date',
-            'end_date' => 'nullable|date|after_or_equal:start_date',
-            'is_current' => 'boolean'
+            'batch_name' => 'required|string|max:50|unique:batches,batch_name',
+            'academic_year_id' => 'nullable|exists:academic_years,id',
+            'is_active' => 'boolean'
         ]);
 
-        $validated['is_current'] = $request->has('is_current');
+        $validated['is_active'] = $request->has('is_active');
         $validated['created_by'] = auth()->id();
-
-        if ($validated['is_current']) {
-            Batch::where('is_current', true)->update(['is_current' => false]);
-        }
 
         Batch::create($validated);
 
@@ -41,24 +37,20 @@ class BatchController extends Controller
 
     public function edit(Batch $batch)
     {
-        return view('admin.batches.edit', compact('batch'));
+        $academic_years = \App\Models\AcademicYear::latest()->get();
+        return view('admin.batches.edit', compact('batch', 'academic_years'));
     }
 
     public function update(Request $request, Batch $batch)
     {
         $validated = $request->validate([
-            'batch_name' => 'required|string|max:100|unique:batches,batch_name,' . $batch->id,
-            'start_date' => 'nullable|date',
-            'end_date' => 'nullable|date|after_or_equal:start_date',
-            'is_current' => 'boolean'
+            'batch_name' => 'required|string|max:50|unique:batches,batch_name,' . $batch->id,
+            'academic_year_id' => 'nullable|exists:academic_years,id',
+            'is_active' => 'boolean'
         ]);
 
-        $validated['is_current'] = $request->has('is_current');
+        $validated['is_active'] = $request->has('is_active');
         $validated['updated_by'] = auth()->id();
-
-        if ($validated['is_current']) {
-            Batch::where('id', '!=', $batch->id)->update(['is_current' => false]);
-        }
 
         $batch->update($validated);
 

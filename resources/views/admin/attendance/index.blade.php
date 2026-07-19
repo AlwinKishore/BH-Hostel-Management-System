@@ -58,49 +58,57 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($students as $student)
-                    @php
-                        $attendanceRecord = $student->attendances->first();
-                        $attendanceStatus = $attendanceRecord ? ($attendanceRecord->is_present ? 'present' : 'absent') : 'present';
-                    @endphp
-                    <tr class="group">
-                        <td>
-                            <div class="flex items-center">
-                                <div class="h-10 w-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500 font-black border border-slate-200 mr-4 group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-500 transition-all duration-300">
-                                    {{ substr($student->student_name, 0, 1) }}
-                                </div>
-                                <div>
-                                    <div class="font-bold text-slate-800">{{ $student->student_name }}</div>
-                                    <div class="text-[9px] text-slate-600 uppercase">D.No: {{ $student->dno ?? 'N/A' }}</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            @if($student->room)
-                                <div class="text-sm font-bold text-slate-700">Room {{ $student->room->room_no }}</div>
-                                <div class="text-[9px] text-slate-600 font-black uppercase tracking-widest">Hostel {{ $student->hostel_no }}</div>
-                            @else
-                                <span class="text-slate-500 italic text-xs">Unassigned</span>
-                            @endif
-                        </td>
-                        <td class="text-center">
-                            <div class="flex justify-center space-x-4">
-                                <label class="cursor-pointer group/opt">
-                                    <input type="radio" name="attendance[{{ $student->id }}]" value="present" class="hidden peer" {{ $attendanceStatus == 'present' ? 'checked' : '' }}>
-                                    <div class="w-12 h-12 flex items-center justify-center rounded-2xl border-2 border-slate-100 text-slate-200 peer-checked:bg-emerald-500 peer-checked:border-emerald-500 peer-checked:text-white peer-checked:shadow-lg peer-checked:shadow-emerald-500/30 transition-all duration-200 hover:border-emerald-200 active:scale-90">
-                                        <i class="fas fa-check text-lg"></i>
+                    @forelse($groupedStudents as $groupName => $studentsGroup)
+                        <tr class="bg-indigo-50/50 border-y border-indigo-100/50">
+                            <td colspan="3" class="py-3 px-6 text-[10px] font-black text-indigo-700 uppercase tracking-[0.2em] shadow-inner">
+                                <i class="fas fa-layer-group mr-2 opacity-70"></i> {{ $groupName }}
+                                <span class="float-right bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full">{{ $studentsGroup->count() }} Students</span>
+                            </td>
+                        </tr>
+                        @foreach($studentsGroup as $student)
+                        @php
+                            $attendanceRecord = $student->attendances->first();
+                            $attendanceStatus = $attendanceRecord ? ($attendanceRecord->is_present ? 'present' : 'absent') : 'present';
+                        @endphp
+                        <tr class="group">
+                            <td>
+                                <div class="flex items-center">
+                                    <div class="h-10 w-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500 font-black border border-slate-200 mr-4 group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-500 transition-all duration-300">
+                                        {{ substr($student->student_name, 0, 1) }}
                                     </div>
-                                </label>
-                                
-                                <label class="cursor-pointer group/opt">
-                                    <input type="radio" name="attendance[{{ $student->id }}]" value="absent" class="hidden peer" {{ $attendanceStatus == 'absent' ? 'checked' : '' }}>
-                                    <div class="w-12 h-12 flex items-center justify-center rounded-2xl border-2 border-slate-100 text-slate-200 peer-checked:bg-rose-500 peer-checked:border-rose-500 peer-checked:text-white peer-checked:shadow-lg peer-checked:shadow-rose-500/30 transition-all duration-200 hover:border-rose-200 active:scale-90">
-                                        <i class="fas fa-times text-lg"></i>
+                                    <div>
+                                        <div class="font-bold text-slate-800">{{ $student->student_name }}</div>
+                                        <div class="text-[9px] text-slate-600 uppercase">D.No: {{ $student->dno ?? 'N/A' }}</div>
                                     </div>
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
+                                </div>
+                            </td>
+                            <td>
+                                @if($student->room)
+                                    <div class="text-sm font-bold text-slate-700">Room {{ $student->room->room_no }}</div>
+                                    <div class="text-[9px] text-slate-600 font-black uppercase tracking-widest">Hostel {{ $student->hostel_no }}</div>
+                                @else
+                                    <span class="text-slate-500 italic text-xs">Unassigned</span>
+                                @endif
+                            </td>
+                            <td class="text-center">
+                                <div class="flex justify-center space-x-4">
+                                    <label class="cursor-pointer group/opt">
+                                        <input type="radio" name="attendance[{{ $student->id }}]" value="present" class="hidden peer" {{ $attendanceStatus == 'present' ? 'checked' : '' }}>
+                                        <div class="w-12 h-12 flex items-center justify-center rounded-2xl border-2 border-slate-100 text-slate-200 peer-checked:bg-emerald-500 peer-checked:border-emerald-500 peer-checked:text-white peer-checked:shadow-lg peer-checked:shadow-emerald-500/30 transition-all duration-200 hover:border-emerald-200 active:scale-90">
+                                            <i class="fas fa-check text-lg"></i>
+                                        </div>
+                                    </label>
+                                    
+                                    <label class="cursor-pointer group/opt">
+                                        <input type="radio" name="attendance[{{ $student->id }}]" value="absent" class="hidden peer" {{ $attendanceStatus == 'absent' ? 'checked' : '' }}>
+                                        <div class="w-12 h-12 flex items-center justify-center rounded-2xl border-2 border-slate-100 text-slate-200 peer-checked:bg-rose-500 peer-checked:border-rose-500 peer-checked:text-white peer-checked:shadow-lg peer-checked:shadow-rose-500/30 transition-all duration-200 hover:border-rose-200 active:scale-90">
+                                            <i class="fas fa-times text-lg"></i>
+                                        </div>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
                     @empty
                     <tr>
                         <td colspan="3" class="text-center py-20">
@@ -113,7 +121,7 @@
             </table>
         </div>
 
-        @if($students->isNotEmpty())
+        @if($groupedStudents->isNotEmpty())
         <div class="p-10 bg-slate-50/50 border-t border-slate-100 flex justify-center md:justify-end">
             <button type="submit" class="btn-primary bg-indigo-600 text-white hover:bg-indigo-700 px-16 py-4 rounded-xl shadow-xl shadow-indigo-600/30 transition-all font-bold font-sm">
                 <i class="fas fa-cloud-arrow-up mr-3 opacity-70"></i> Commit Roster to Database

@@ -18,7 +18,7 @@ class DashboardController extends Controller
             'vacant_rooms' => Room::where('is_available', true)->count(),
             'leaves_pending' => Leave::where('is_approved', false)->count(),
             'todays_attendance' => Attendance::whereDate('attendance_date', today())->count(),
-            'active_batches' => Batch::where('is_current', true)->count(),
+            'active_batches' => Batch::where('is_active', true)->count(),
         ];
 
         return view('admin.dashboard', compact('stats'));

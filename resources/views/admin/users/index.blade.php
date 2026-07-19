@@ -20,6 +20,7 @@
                 <tr>
                     <th>User Identity</th>
                     <th>Electronic Mail</th>
+                    <th>Assigned Year</th>
                     <th>Account Status</th>
                     <th>Last Active</th>
                     <th class="text-right">Operations</th>
@@ -40,9 +41,18 @@
                         <div class="text-sm font-medium text-slate-600">{{ $user->email }}</div>
                     </td>
                     <td>
-                        <span class="px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200">
-                            Active Session
-                        </span>
+                        <div class="text-sm font-bold text-slate-700">{{ $user->academicYear ? $user->academicYear->name : 'N/A' }}</div>
+                    </td>
+                    <td>
+                        @if($user->is_active)
+                            <span class="px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200">
+                                Active Session
+                            </span>
+                        @else
+                            <span class="px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-full bg-rose-100 text-rose-700 border border-rose-200">
+                                Deactivated
+                            </span>
+                        @endif
                     </td>
                     <td>
                         <div class="text-xs font-bold text-slate-500 uppercase tracking-tighter italic">
@@ -66,7 +76,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" class="text-center py-20 italic font-bold text-slate-400">
+                    <td colspan="6" class="text-center py-20 italic font-bold text-slate-400">
                         No system users found.
                     </td>
                 </tr>

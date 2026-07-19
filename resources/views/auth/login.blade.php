@@ -26,11 +26,6 @@
         <div>
             <div class="flex justify-between items-center mb-1.5 ml-1">
                 <label for="password" class="text-sm font-semibold text-slate-300">Password</label>
-                @if (Route::has('password.request'))
-                    <a class="text-[10px] uppercase tracking-wider font-extrabold text-indigo-400 hover:text-indigo-300 transition-colors" href="{{ route('password.request') }}">
-                        Forgot Password?
-                    </a>
-                @endif
             </div>
             <div class="relative group">
                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500 group-focus-within:text-indigo-400 transition-colors">
@@ -56,13 +51,6 @@
             </button>
         </div>
 
-        <div class="pt-6 text-center">
-            <p class="text-slate-500 text-xs font-semibold">
-                Don't have an account? 
-                <a href="{{ route('register') }}" class="text-indigo-400 hover:text-indigo-300 font-black ml-1 transition-colors underline decoration-2 underline-offset-4">
-                    Register Now
-                </a>
-            </p>
-        </div>
+
     </form>
 </x-guest-layout>

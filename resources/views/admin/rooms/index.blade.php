@@ -43,14 +43,17 @@
                         <div class="text-sm font-medium text-slate-600">{{ $room->category ? $room->category->category_name : 'Standard' }}</div>
                     </td>
                     <td>
-                        <div class="text-sm font-black text-slate-700">{{ $room->accommodation }} Person(s)</div>
+                        <div class="text-sm font-black text-slate-700">{{ $room->hostellers_count }} / {{ $room->accommodation }} Person(s)</div>
+                        <div class="w-full bg-slate-200 rounded-full h-1.5 mt-2">
+                            <div class="bg-indigo-600 h-1.5 rounded-full" style="width: {{ $room->accommodation > 0 ? min(100, ($room->hostellers_count / $room->accommodation) * 100) : 0 }}%"></div>
+                        </div>
                     </td>
                     <td>
                         @if(!$room->is_available)
                             <span class="px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-full bg-rose-100 text-rose-700 border border-rose-200">
                                 Unavailable
                             </span>
-                        @elseif($room->is_full)
+                        @elseif($room->hostellers_count >= $room->accommodation)
                             <span class="px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-full bg-amber-100 text-amber-700 border border-amber-200">
                                 Filled
                             </span>

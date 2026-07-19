@@ -17,11 +17,19 @@ class AttendanceController extends Controller
         
         $query = Hosteller::with(['attendances' => function($q) use ($date) {
             $q->where('attendance_date', $date);
-        }]);
+        }, 'academicYear', 'batch', 'room']);
 
         $students = $query->get();
+        
+        $groupedStudents = $students->sortBy(function($student) {
+            return ($student->academicYear->name ?? 'Z') . '-' . ($student->batch->batch_name ?? 'Z');
+        })->groupBy(function($student) {
+            $year = $student->academicYear ? $student->academicYear->name : 'Unassigned Year';
+            $batch = $student->batch ? $student->batch->batch_name : 'Unassigned Batch';
+            return $year . ' — ' . $batch;
+        });
 
-        return view('admin.attendance.index', compact('students', 'date'));
+        return view('admin.attendance.index', compact('groupedStudents', 'date'));
     }
 
     /**

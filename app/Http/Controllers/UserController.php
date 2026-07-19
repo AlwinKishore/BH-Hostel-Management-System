@@ -17,7 +17,8 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('admin.users.create');
+        $academic_years = \App\Models\AcademicYear::all();
+        return view('admin.users.create', compact('academic_years'));
     }
 
     public function store(Request $request)
@@ -26,12 +27,16 @@ class UserController extends Controller
             'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'academic_year_id' => ['nullable', 'exists:academic_years,id'],
+            'is_active' => ['boolean'],
         ]);
 
         User::create([
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'academic_year_id' => $request->academic_year_id,
+            'is_active' => $request->has('is_active', true),
         ]);
 
         return redirect()->route('users.index')->with('success', 'New system user registered successfully.');
@@ -39,7 +44,8 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        return view('admin.users.edit', compact('user'));
+        $academic_years = \App\Models\AcademicYear::all();
+        return view('admin.users.edit', compact('user', 'academic_years'));
     }
 
     public function update(Request $request, User $user)
@@ -48,11 +54,15 @@ class UserController extends Controller
             'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email,'.$user->id],
             'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
+            'academic_year_id' => ['nullable', 'exists:academic_years,id'],
+            'is_active' => ['boolean'],
         ]);
 
         $user->update([
             'username' => $request->username,
             'email' => $request->email,
+            'academic_year_id' => $request->academic_year_id,
+            'is_active' => $request->has('is_active'),
         ]);
 
         if ($request->filled('password')) {

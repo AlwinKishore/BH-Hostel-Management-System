@@ -49,6 +49,24 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+        $user = Auth::user();
+
+        // Check for academic year expiration
+        if ($user->academic_year_id && $user->academicYear) {
+            $endDate = \Carbon\Carbon::parse($user->academicYear->end_date);
+            if (now()->startOfDay()->greaterThan($endDate)) {
+                $user->update(['is_active' => false]);
+            }
+        }
+
+        // Check if account is active
+        if (!$user->is_active) {
+            Auth::logout();
+            throw ValidationException::withMessages([
+                'email' => 'Your account has been deactivated or expired.',
+            ]);
+        }
+
         RateLimiter::clear($this->throttleKey());
     }
 

@@ -10,7 +10,7 @@ class RoomController extends Controller
 {
     public function index()
     {
-        $rooms = Room::with('category')->latest()->paginate(10);
+        $rooms = Room::with('category')->withCount('hostellers')->latest()->paginate(10);
         return view('admin.rooms.index', compact('rooms'));
     }
 

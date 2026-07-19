@@ -90,19 +90,19 @@
                 </div>
                 
                 <div class="px-9 py-4 uppercase text-[10px] font-black text-slate-400 tracking-[0.25em]">Academic Setup</div>
-                
+                <a href="{{ route('academic-years.index') }}" class="nav-link-premium {{ request()->routeIs('academic-years.*') ? 'active' : '' }}">
+                    <i class="fas fa-calendar-alt mr-4 opacity-70"></i> Academic Years
+                </a>
                 <a href="{{ route('batches.index') }}" class="nav-link-premium {{ request()->routeIs('batches.*') ? 'active' : '' }}">
                     <i class="fas fa-layer-group mr-4 opacity-70"></i> Batches
                 </a>
-                <a href="{{ route('years.index') }}" class="nav-link-premium {{ request()->routeIs('years.*') ? 'active' : '' }}">
-                    <i class="fas fa-calendar-alt mr-4 opacity-70"></i> Academic Years
-                </a>
+                
+                
+
+                <div class="px-9 py-4 uppercase text-[10px] font-black text-slate-400 tracking-[0.25em]">Hostel Core</div>
                 <a href="{{ route('categories.index') }}" class="nav-link-premium {{ request()->routeIs('categories.*') ? 'active' : '' }}">
                     <i class="fas fa-tags mr-4 opacity-70"></i> Categories
                 </a>
-
-                <div class="px-9 py-4 uppercase text-[10px] font-black text-slate-400 tracking-[0.25em]">Hostel Core</div>
-                
                 <a href="{{ route('rooms.index') }}" class="nav-link-premium {{ request()->routeIs('rooms.*') ? 'active' : '' }}">
                     <i class="fas fa-door-open mr-4 opacity-70"></i> Rooms
                 </a>
@@ -155,10 +155,10 @@
                 </div>
                 
                 <div class="flex items-center space-x-6">
-                    <div class="hidden lg:flex items-center bg-white/5 border border-white/10 px-4 py-2 rounded-xl text-slate-400 hover:bg-white/10 transition-colors cursor-pointer group">
-                        <i class="fas fa-search mr-3 text-xs opacity-50"></i>
-                        <span class="text-xs font-bold opacity-70 group-hover:opacity-100">Global Search...</span>
-                    </div>
+                    <form action="{{ route('search.index') }}" method="GET" class="hidden lg:flex items-center bg-white/5 border border-white/10 px-4 py-2 rounded-xl text-slate-400 hover:bg-white/10 transition-colors focus-within:bg-white/10 focus-within:border-indigo-500/50 group">
+                        <i class="fas fa-search mr-3 text-xs opacity-50 group-focus-within:text-indigo-400 group-focus-within:opacity-100 transition-colors"></i>
+                        <input type="text" name="q" value="{{ request('q') }}" placeholder="Global Search..." class="bg-transparent border-none outline-none text-xs font-bold opacity-70 group-hover:opacity-100 group-focus-within:opacity-100 text-white placeholder-slate-400 w-48 transition-all">
+                    </form>
 
                     <div class="h-6 w-px bg-white/10"></div>
 
@@ -219,5 +219,6 @@
             background: rgba(255, 255, 255, 0.2);
         }
     </style>
+    @yield('scripts')
 </body>
 </html>

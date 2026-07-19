@@ -19,7 +19,7 @@
             <thead>
                 <tr>
                     <th>Identity</th>
-                    <th>Batch / Year</th>
+                    <th>Academic Year / Batch</th>
                     <th>Hostel / D.No</th>
                     <th>Allocation</th>
                     <th class="text-right">Actions</th>
@@ -40,8 +40,8 @@
                         </div>
                     </td>
                     <td>
-                        <div class="text-sm font-semibold text-slate-700">{{ $student->batch ? $student->batch->batch_name : 'No Batch' }}</div>
-                        <div class="text-xs text-slate-600 font-medium">{{ $student->year ? $student->year->year_name : 'No Year' }}</div>
+                        <div class="text-sm font-semibold text-slate-700">{{ $student->academicYear ? $student->academicYear->name : 'No Academic Year' }}</div>
+                        <div class="text-xs text-slate-600 font-medium">{{ $student->batch ? $student->batch->batch_name : 'No Batch' }}</div>
                     </td>
                     <td>
                         <div class="text-sm font-semibold text-slate-700">Hostel: {{ $student->hostel_no }}</div>
